@@ -1,0 +1,14 @@
+{
+  "name": "collegewindow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "frontend": "cd frontend && npm start",
+    "backend": "cd backend && npm run dev",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
