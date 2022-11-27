@@ -16,6 +16,16 @@ a{
   text-decoration: none;
   color: inherit;
 }
+button{
+  border: none;
+  outline: none;
+  background: var(--blue-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
 :root {
   --bg-primary: #fff;
   --bg-secondary: #f0f2f5;
@@ -30,7 +40,7 @@ a{
   --dark-color-primary: #242526;
   --dark-color-secondary: #b0b3b8;
   --blue-color: #1876f2;
-  --green-color: #42b72a;
+  --green-color: #00d1b9;
   --light-blue-color: #e7f3ff;
   --border-color: #ccced2;
   --shadow-1: rgba(0, 0, 0, 0.2);
