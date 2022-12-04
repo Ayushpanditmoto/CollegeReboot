@@ -1,25 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
+import LoginInput from './Components/loginInput';
+import * as Yup from 'yup';
+
+const loginInfos = {
+  email: '',
+  password: '',
+};
+
+const LoginValidationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid Email Address')
+    .required('Email is required'),
+  password: Yup.string()
+    .min(8, 'Password is Too Short!')
+    .max(50, 'Password is Too Long!')
+    .required('Password is required'),
+});
+
+//JSON.stringify(login) is used to convert the object into a string
+//JSON.parse(login) is used to convert the string into an object
+// ... operator is used to copy the values of one or more source objects to a target object
+// console.log(`${[name]}: ${value}`); // email: what you type in email input
+// console.log(
+//   `${[
+//     name,
+//   ]}: ${value} name: ${name}, value: ${value}, login: ${JSON.stringify(
+//     login
+//   )}`
+// ); // {email: "", password: ""}
 
 function Login() {
+  const [login, setLogin] = useState(loginInfos);
+  const { email, password } = login;
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLogin({
+      ...login,
+      [name]: value,
+    });
+  };
   return (
     <>
       <LoginContainer>
         <LoginHeader>
-          <h1>CollegeWindow</h1>
+          <h1>CollegeReboot</h1>
           <h2>
-            CollegeWindow helps you to connect with people in Jadavpur
+            CollegeReboot helps you to connect with people in Jadavpur
             University
           </h2>
         </LoginHeader>
         <LoginForm>
-          <Formik initialValues={{ email: '', password: '' }}>
+          <Formik
+            enableReinitialize
+            initialValues={{
+              email,
+              password,
+            }}
+            validationSchema={LoginValidationSchema}
+          >
             {(formik) => (
               <Form>
-                <input type='email' name='email' placeholder='Email' />
-                <input type='password' name='password' placeholder='Password' />
+                <LoginInput
+                  name='email'
+                  placeholder='Email'
+                  type='email'
+                  onChange={handleLoginChange}
+                />
+                <LoginInput
+                  type='password'
+                  name='password'
+                  placeholder='Password'
+                  onChange={handleLoginChange}
+                />
                 <button type='submit'>Login</button>
               </Form>
             )}
@@ -28,9 +83,9 @@ function Login() {
             Forgotten Password ?
           </Link>
           <div className='sign_splitter'></div>
-          <button className='signup'>
-            <Link to='/signup'>Sign Up</Link>
-          </button>
+          <Link to='/signup'>
+            <button className='signup'>Sign Up</button>
+          </Link>
         </LoginForm>
       </LoginContainer>
     </>
@@ -82,7 +137,7 @@ const LoginForm = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  input {
+  /* input {
     width: 100%;
     height: 50px;
     border: none;
@@ -93,7 +148,7 @@ const LoginForm = styled.div`
     border-radius: 5px;
     padding: 0 10px;
     margin: 10px 0;
-  }
+  } */
   button {
     width: 100%;
     height: 50px;
@@ -102,6 +157,7 @@ const LoginForm = styled.div`
     background-color: var(--blue-color);
     color: #fff;
     font-size: 1.2rem;
+    box-shadow: var(--shadow-1);
     font-weight: 600;
     cursor: pointer;
     margin: 10px 0;
@@ -116,10 +172,16 @@ const LoginForm = styled.div`
     margin: 10px 0;
   }
   .signup {
+    width: 200px;
+    height: 50px;
+    border: none;
+    outline: none;
     background-color: var(--green-color);
-    width: 70% !important;
+    color: var(--bg-primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
     margin: 10px 0;
-    font-weight: 600 !important;
-    font-size: 18px !important;
+    box-shadow: var(--shadow-1);
   }
 `;
