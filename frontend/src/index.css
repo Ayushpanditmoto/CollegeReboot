@@ -48,4 +48,15 @@ button{
   --shadow-3: rgba(0, 0, 0, 0.3);
   --shadow-inset: rgba(255, 255, 255, 0.5);
 }
+/* --global blur- */
+.blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.768);
+  /* backdrop-filter: blur(5px); */
+  z-index: 99;
+}
 

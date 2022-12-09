@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
-import LoginInput from './Components/loginInput';
+import LoginInput from './Components/Input/loginInput';
 import * as Yup from 'yup';
+import RegisterForm from './Components/RegisterForm';
 
 const loginInfos = {
   email: '',
@@ -88,6 +89,10 @@ function Login() {
           </Link>
         </LoginForm>
       </LoginContainer>
+      <RegisterForm />
+      <Footer>
+        <p>© {new Date().getFullYear()} CollegeReboot</p>
+      </Footer>
     </>
   );
 }
@@ -183,5 +188,19 @@ const LoginForm = styled.div`
     cursor: pointer;
     margin: 10px 0;
     box-shadow: var(--shadow-1);
+  }
+`;
+
+const Footer = styled.div`
+  width: 100%;
+  height: 10vh;
+  background-color: var(--bg-third);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-secondary);
   }
 `;
