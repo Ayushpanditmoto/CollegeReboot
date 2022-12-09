@@ -63,7 +63,7 @@ const InputError = styled.div`
   color: white;
   font-size: 1rem;
   display: flex;
-  padding: 10px 0;
+  padding: 10px 5px;
   border-radius: 5px;
   box-shadow: var(--shadow-1);
   justify-content: center;

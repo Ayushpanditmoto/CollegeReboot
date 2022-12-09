@@ -3,6 +3,31 @@ import styled from 'styled-components';
 import { AiOutlineClose, AiOutlineInfoCircle } from 'react-icons/ai';
 import { Formik, Form } from 'formik';
 import RegisterInput from '../Input/RegisterInput';
+import * as Yup from 'yup';
+
+const RegisterValidationSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('What is your First name?'),
+  lastName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('What is your Last name?'),
+  email: Yup.string()
+    .email('Invalid Email Address')
+    .required(
+      'You will need this when you log in and if you forget your password'
+    ),
+  password: Yup.string()
+    .min(8, 'Password is Too Short!')
+    .max(50, 'Password is Too Long!')
+    .required('Password is required'),
+  branch: Yup.string().required('Branch is required'),
+  bYear: Yup.string().required('Year is required'),
+  bMonth: Yup.string().required('Month is required'),
+  bDay: Yup.string().required('Day is required'),
+});
 
 function RegisterForm() {
   const UserInfo = {
@@ -10,6 +35,7 @@ function RegisterForm() {
     lastName: '',
     email: '',
     password: '',
+    branch: '',
     gender: '',
     bYear: new Date().getFullYear(),
     bMonth: new Date().getMonth() + 1,
@@ -17,8 +43,17 @@ function RegisterForm() {
   };
   const [register, setRegister] = useState(UserInfo);
 
-  const { firstName, lastName, email, password, gender, bYear, bMonth, bDay } =
-    register;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    branch,
+    gender,
+    bYear,
+    bMonth,
+    bDay,
+  } = register;
 
   const Year = Array.from(
     new Array(108),
@@ -61,9 +96,8 @@ function RegisterForm() {
       ...register,
       [name]: value,
     });
-    console.log(register);
   };
-
+  console.log(register);
   return (
     <Registeration>
       <div className='blur'>
@@ -73,7 +107,21 @@ function RegisterForm() {
             <span>Sign Up </span>
             <span>it's quick and easy</span>
           </div>
-          <Formik>
+          <Formik
+            enableReinitialize
+            initialValues={{
+              firstName,
+              lastName,
+              email,
+              password,
+              branch,
+              gender,
+              bYear,
+              bMonth,
+              bDay,
+            }}
+            validationSchema={RegisterValidationSchema}
+          >
             {(formik) => (
               <Form className='register_form'>
                 <div className='reg_line'>
@@ -100,7 +148,7 @@ function RegisterForm() {
                 <div className='reg_line'>
                   <RegisterInput
                     name='password'
-                    placeholder='Password'
+                    placeholder='Enter New Password'
                     onChange={handleRegisterChange}
                   />
                 </div>
