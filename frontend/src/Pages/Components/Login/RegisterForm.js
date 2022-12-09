@@ -4,20 +4,55 @@ import { AiOutlineClose, AiOutlineInfoCircle } from 'react-icons/ai';
 import { Formik, Form } from 'formik';
 import RegisterInput from '../Input/RegisterInput';
 
-const UserInfo = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  gender: '',
-  bYear: '',
-  bMonth: '',
-  bDay: '',
-};
-
 function RegisterForm() {
+  const UserInfo = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    gender: '',
+    bYear: new Date().getFullYear(),
+    bMonth: new Date().getMonth() + 1,
+    bDay: new Date().getDate(),
+  };
   const [register, setRegister] = useState(UserInfo);
+
+  const { firstName, lastName, email, password, gender, bYear, bMonth, bDay } =
+    register;
+
+  const Year = Array.from(
+    new Array(108),
+    (val, index) => new Date().getFullYear() - index
+  );
+  // console.log(Year);
+
+  const MonthMap = {
+    1: 'Jan',
+    2: 'Feb',
+    3: 'Mar',
+    4: 'Apr',
+    5: 'May',
+    6: 'Jun',
+    7: 'Jul',
+    8: 'Aug',
+    9: 'Sep',
+    10: 'Oct',
+    11: 'Nov',
+    12: 'Dec',
+  };
+
+  const Month = Array.from(new Array(12), (val, index) => index + 1);
+
+  const getDaysInMonth = () => {
+    return new Date(bYear, bMonth, 0).getDate();
+  };
+
+  const Day = Array.from(
+    new Array(getDaysInMonth()),
+    (val, index) => index + 1
+  );
+
+  // console.log(Day);
 
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +61,7 @@ function RegisterForm() {
       ...register,
       [name]: value,
     });
-    // console.log(register);
+    console.log(register);
   };
 
   return (
@@ -43,8 +78,15 @@ function RegisterForm() {
               <Form className='register_form'>
                 <div className='reg_line'>
                   <RegisterInput
-                    name='name'
-                    placeholder='Name'
+                    name='firstName'
+                    placeholder='First Name'
+                    onChange={handleRegisterChange}
+                  />
+                </div>
+                <div className='reg_line'>
+                  <RegisterInput
+                    name='lastName'
+                    placeholder='Surname Name'
                     onChange={handleRegisterChange}
                   />
                 </div>
@@ -62,13 +104,13 @@ function RegisterForm() {
                     onChange={handleRegisterChange}
                   />
                 </div>
-                <div className='reg_line'>
+                {/* <div className='reg_line'>
                   <RegisterInput
                     name='confirmPassword'
                     placeholder='Confirm Password'
                     onChange={handleRegisterChange}
                   />
-                </div>
+                </div> */}
                 <div className='reg_line'>
                   <div className='reg_line_header'>Branch</div>
                   <select name='branch' id='branch'>
@@ -84,26 +126,38 @@ function RegisterForm() {
                     <select
                       name='bDay'
                       id='bDay'
+                      value={bDay}
                       onChange={handleRegisterChange}
                     >
-                      <option value='2021'>2021</option>
-                      <option value='2020'>2020</option>
+                      {Day.map((day, i) => (
+                        <option key={i} value={day}>
+                          {day}
+                        </option>
+                      ))}
                     </select>
                     <select
                       name='bMonth'
                       id='bMonth'
+                      value={bMonth}
                       onChange={handleRegisterChange}
                     >
-                      <option value='2021'>2021</option>
-                      <option value='2020'>2020</option>
+                      {Month.map((month, i) => (
+                        <option key={i} value={month}>
+                          {MonthMap[month]}
+                        </option>
+                      ))}
                     </select>
                     <select
                       name='bYear'
                       id='bYear'
+                      value={bYear}
                       onChange={handleRegisterChange}
                     >
-                      <option value='2021'>2021</option>
-                      <option value='2020'>2020</option>
+                      {Year.map((year, i) => (
+                        <option key={i} value={year}>
+                          {year}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

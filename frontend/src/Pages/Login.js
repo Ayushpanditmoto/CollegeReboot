@@ -102,6 +102,7 @@ export default Login;
 const LoginContainer = styled.div`
   width: 100%;
   height: 90vh;
+  /* height: auto; */
   background-color: var(--bg-secondary);
   display: flex;
   flex-direction: column;
