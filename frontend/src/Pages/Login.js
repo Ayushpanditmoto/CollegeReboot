@@ -4,7 +4,7 @@ import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import LoginInput from './Components/Input/loginInput';
 import * as Yup from 'yup';
-import RegisterForm from './Components/RegisterForm';
+import RegisterForm from './Components/Login/RegisterForm';
 
 const loginInfos = {
   email: '',
