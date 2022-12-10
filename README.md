@@ -3,6 +3,6 @@ CollegeReboot is a Social Media Platform where user can Communicate each other  
 
 English
 
-This readme describes steps and considerationa for demonstrating the CollegeReboot App.
+This readme describes steps and considerations for demonstrating the CollegeReboot App.
 
 
