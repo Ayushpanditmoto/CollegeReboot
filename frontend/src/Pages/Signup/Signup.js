@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose, AiOutlineInfoCircle } from 'react-icons/ai';
 import { Formik, Form } from 'formik';
-import RegisterInput from './Components/Input/RegisterInput';
+import RegisterInput from './RegisterInput';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 
@@ -43,6 +43,9 @@ function Signup() {
     bDay: new Date().getDate(),
   };
   const [register, setRegister] = useState(UserInfo);
+  const [dateError, setDateError] = useState('');
+  const [genderError, setGenderError] = useState('');
+  const [branchError, setBranchError] = useState('');
 
   const {
     firstName,
@@ -123,6 +126,7 @@ function Signup() {
             bDay,
           }}
           validationSchema={RegisterValidationSchema}
+          onSubmit={() => {}}
         >
           {(formik) => (
             <Form className='register_form'>
@@ -163,11 +167,20 @@ function Signup() {
                 </div> */}
               <div className='reg_line'>
                 <div className='reg_line_header'>Branch</div>
-                <select name='branch' id='branch'>
+                <select
+                  name='branch'
+                  id='branch'
+                  value={branch}
+                  onChange={handleRegisterChange}
+                >
                   <option value='CSE'>CSE</option>
+                  <option value='IT'>IT</option>
+                  <option value='MECH'>MECH</option>
+                  <option value='CIVIL'>CIVIL</option>
                   <option value='ECE'>ECE</option>
                 </select>
               </div>
+              {branchError && <MessageError>{branchError}</MessageError>}
               <div className='reg_col'>
                 <div className='reg_line_header'>
                   Date of Birth <AiOutlineInfoCircle />
@@ -211,6 +224,7 @@ function Signup() {
                   </select>
                 </div>
               </div>
+              {dateError && <MessageError>{dateError}</MessageError>}
               <div className='reg_col'>
                 <div className='reg_line_header'>
                   Gender <AiOutlineInfoCircle />
@@ -248,13 +262,16 @@ function Signup() {
                   </label>
                 </div>
               </div>
+              {genderError && <MessageError>{genderError}</MessageError>}
               <div className='reg_info'>
                 By clicking Sign Up, you agree to our{' '}
                 <span>Terms, Data Policy &nbsp;</span> and
                 <span> Cookie Policy.</span> You may receive SMS Notifications
                 from us and can opt out any time.
               </div>
-              <button type='submit'>Sign Up</button>
+              <button type='submit' onSubmit={formik.handleSubmit}>
+                Sign Up
+              </button>
             </Form>
           )}
         </Formik>
@@ -264,6 +281,18 @@ function Signup() {
 }
 
 export default Signup;
+
+const MessageError = styled.div`
+  color: white;
+  width: 100%;
+  text-align: center;
+  background-color: #c63b2c;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px var(--shadow-1);
+`;
 
 const Registeration = styled.div`
   display: flex;
