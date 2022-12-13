@@ -4,7 +4,7 @@ import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import LoginInput from './Components/Input/loginInput';
 import * as Yup from 'yup';
-import RegisterForm from './Components/Login/RegisterForm';
+// import RegisterForm from './Components/Login/RegisterForm';
 
 const loginInfos = {
   email: '',
@@ -89,7 +89,7 @@ function Login() {
           </Link>
         </LoginForm>
       </LoginContainer>
-      <RegisterForm />
+      {/* <RegisterForm /> */}
       <Footer>
         <p>© {new Date().getFullYear()} CollegeReboot</p>
       </Footer>
@@ -102,7 +102,6 @@ export default Login;
 const LoginContainer = styled.div`
   width: 100%;
   height: 90vh;
-  /* height: auto; */
   background-color: var(--bg-secondary);
   display: flex;
   flex-direction: column;
