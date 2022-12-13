@@ -263,14 +263,16 @@ function Signup() {
 export default Signup;
 
 const Registeration = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 50px 0;
   .register {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background: var(--bg-primary);
     box-shadow: 0 1px 2px var(--shadow-1);
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 15px;
     padding-bottom: 1rem;
     width: 350px;
@@ -305,6 +307,7 @@ const Registeration = styled.div`
       gap: 7px;
       button {
         width: 300px;
+        border-radius: 4px;
         background-color: var(--blue-color);
       }
       .reg_info {
