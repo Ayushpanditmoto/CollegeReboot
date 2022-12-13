@@ -4,6 +4,7 @@ import { AiOutlineClose, AiOutlineInfoCircle } from 'react-icons/ai';
 import { Formik, Form } from 'formik';
 import RegisterInput from './Components/Input/RegisterInput';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 
 const RegisterValidationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -102,7 +103,9 @@ function Signup() {
     <Registeration>
       <div className='register'>
         <div className='register_header'>
-          <AiOutlineClose />
+          <Link to='/'>
+            <AiOutlineClose />
+          </Link>
           <span>Sign Up </span>
           <span>it's quick and easy</span>
         </div>
