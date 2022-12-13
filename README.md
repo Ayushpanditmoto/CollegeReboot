@@ -6,4 +6,5 @@ English
 This readme describes steps and considerationa for demonstrating the CollegeReboot App.
 
 
-![Screenshot (717)](https://user-images.githubusercontent.com/105505839/206856583-6d07d1d7-e7de-4c7e-b56e-796c484fb0b4.png)
+![Screenshot_4](https://user-images.githubusercontent.com/31253617/207381450-6dea6c3b-620b-49f3-a28b-5ec720eb4b53.png)
+![Screenshot_5](https://user-images.githubusercontent.com/31253617/207381497-7f99bb7f-7a30-4273-b171-415dfdd765af.png)
