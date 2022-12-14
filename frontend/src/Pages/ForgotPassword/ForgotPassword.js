@@ -4,7 +4,6 @@ import { Formik, Form } from "formik";
 import { Link } from "react-router-dom";
 import EmailInput from "./EmailInput";
 import * as Yup from "yup";
-// import RegisterForm from './Components/Login/RegisterForm';
 
 const LoginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -33,7 +32,6 @@ function ForgotPassword() {
               email,
             }}
             validationSchema={LoginValidationSchema}
-            onSubmit={(values) => console.log(values)}
           >
             {(formik) => (
               <Form>
