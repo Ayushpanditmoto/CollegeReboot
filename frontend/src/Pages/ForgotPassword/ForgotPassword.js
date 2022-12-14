@@ -47,7 +47,7 @@ function ForgotPassword() {
             )}
           </Formik>
           <Link to="/" className="back-to-login">
-            &#8592; Back to Login
+            &#8592; Back To Login
           </Link>
         </ResetForm>
       </ResetContainer>
