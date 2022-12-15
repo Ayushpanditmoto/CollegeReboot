@@ -79,6 +79,7 @@ const ResetHeader = styled.div`
     font-size: 1.6rem;
     font-weight: 900;
     color: #0088ff;
+    margin-bottom: 8px;
   }
   h2 {
     font-size: 1rem;
