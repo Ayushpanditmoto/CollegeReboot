@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose, AiOutlineInfoCircle } from 'react-icons/ai';
-import { Formik, Form } from 'formik';
+import { Field, Formik, Form } from 'formik';
 import RegisterInput from './RegisterInput';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -24,7 +24,7 @@ const RegisterValidationSchema = Yup.object().shape({
     .min(8, 'Password is Too Short!')
     .max(50, 'Password is Too Long!')
     .required('Password is required'),
-  branch: Yup.string().required('Branch is required'),
+  
   bYear: Yup.string().required('Year is required'),
   bMonth: Yup.string().required('Month is required'),
   bDay: Yup.string().required('Day is required'),
@@ -92,6 +92,19 @@ function Signup() {
   );
 
   // console.log(Day);
+  const validateBranch = ( value ) =>{   
+
+    if( !value  ){
+      setBranchError('Branch is required');
+    }
+  }
+
+  const validateGender= ( value ) =>{   
+
+    if( !value  ){
+      setGenderError('Gender is required');
+    }
+  }
 
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
@@ -167,7 +180,20 @@ function Signup() {
                 </div> */}
               <div className='reg_line'>
                 <div className='reg_line_header'>Branch</div>
-                <select
+                <Field as="select"
+                    name='branch'
+                    id='branch'
+                    value={branch}
+                    validate={ validateBranch }
+                    onChange={handleRegisterChange}
+                  >
+                    <option value='CSE'>CSE</option>
+                    <option value='IT'>IT</option>
+                    <option value='MECH'>MECH</option>
+                    <option value='CIVIL'>CIVIL</option>
+                    <option value='ECE'>ECE</option>
+                </Field>
+                {/* <select
                   name='branch'
                   id='branch'
                   value={branch}
@@ -178,7 +204,7 @@ function Signup() {
                   <option value='MECH'>MECH</option>
                   <option value='CIVIL'>CIVIL</option>
                   <option value='ECE'>ECE</option>
-                </select>
+                </select> */}
               </div>
               {branchError && <MessageError>{branchError}</MessageError>}
               <div className='reg_col'>
@@ -230,10 +256,10 @@ function Signup() {
                   Gender <AiOutlineInfoCircle />
                 </div>
                 <div className='reg_grid'>
+                {/* <div role="group" aria-labelledby="gender-radio-group" validate={ validateGender }> */}
                   <label htmlFor='male'>
                     Male
-                    <input
-                      type='radio'
+                    <Field type="radio"
                       name='gender'
                       id='male'
                       value='male'
@@ -242,7 +268,7 @@ function Signup() {
                   </label>
                   <label htmlFor='female'>
                     Female
-                    <input
+                    <Field  
                       type='radio'
                       name='gender'
                       id='female'
@@ -252,7 +278,7 @@ function Signup() {
                   </label>
                   <label htmlFor='other'>
                     Other
-                    <input
+                    <Field
                       type='radio'
                       name='gender'
                       id='other'
@@ -260,6 +286,7 @@ function Signup() {
                       onChange={handleRegisterChange}
                     />
                   </label>
+                  {/* </div> */}
                 </div>
               </div>
               {genderError && <MessageError>{genderError}</MessageError>}
