@@ -27,7 +27,7 @@ const RegisterValidationSchema = Yup.object().shape({
   
   bYear: Yup.string().required('Year is required'),
   bMonth: Yup.string().required('Month is required'),
-  bDay: Yup.string().required('Day is required'),
+  bDay: Yup.string().required('Day is required')
 });
 
 function Signup() {
@@ -92,8 +92,9 @@ function Signup() {
   );
 
   // console.log(Day);
-  const validateBranch = ( value ) =>{   
-    console.log( value)
+
+  //validating Branch control
+  const validateBranch = ( value ) =>{       
     if( !(value.length > 0 )  ){
       setBranchError('Branch is required');
     }else{
@@ -101,18 +102,27 @@ function Signup() {
     }
   }
 
- 
+ //validating gender
   const validateGender= ( value ) =>{   
-
-    if( !value  ){
+    if( !(value.length > 0) ){
       setGenderError('Gender is required');
+    }else{
+      setGenderError('');
     }
   }
 
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
     //  console.log(`${[name]}: ${value}`);
-    validateBranch( value );
+
+    if( name === 'branch'){
+         validateBranch( value );       
+    }
+
+    if( name === 'gender'){
+        setGenderError( '' );      
+    }
+
     setRegister({
       ...register,
       [name]: value,
@@ -143,11 +153,14 @@ function Signup() {
             bDay,
           }}
           validationSchema={RegisterValidationSchema}
-          onSubmit={(values ) => { validateBranch( values.branch )}}
+          onSubmit={(values ) => { 
+            validateBranch( values.branch )
+            validateGender( values.gender )
+          }}
          
         >
           {(formik) => (
-            <Form className='register_form'>
+            <Form className='register_form' onSubmit={formik.handleSubmit}>
               <div className='reg_line'>
                 <RegisterInput
                   name='firstName'
@@ -189,7 +202,7 @@ function Signup() {
                     name='branch'
                     id='branch'
                     value={branch}
-                    // validate={ validateBranch }
+                    // validate={ validateBranch } //if uncommited, this causes unnecessaey error msg onChange event
                     onChange={handleRegisterChange}                    
                   >
                     <option value="" disabled selected>Select branch</option>
@@ -261,8 +274,7 @@ function Signup() {
                 <div className='reg_line_header'>
                   Gender <AiOutlineInfoCircle />
                 </div>
-                <div className='reg_grid'>
-                {/* <div role="group" aria-labelledby="gender-radio-group" validate={ validateGender }> */}
+                <div className='reg_grid' role="group">               
                   <label htmlFor='male'>
                     Male
                     <Field type="radio"
@@ -291,8 +303,7 @@ function Signup() {
                       value='other'
                       onChange={handleRegisterChange}
                     />
-                  </label>
-                  {/* </div> */}
+                  </label>                  
                 </div>
               </div>
               {genderError && <MessageError>{genderError}</MessageError>}
@@ -302,7 +313,7 @@ function Signup() {
                 <span> Cookie Policy.</span> You may receive SMS Notifications
                 from us and can opt out any time.
               </div>
-              <button type='submit' onSubmit={formik.handleSubmit} >
+              <button type='submit'>
                 Sign Up
               </button>
             </Form>
