@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose, AiOutlineInfoCircle } from 'react-icons/ai';
-import { Formik, Form } from 'formik';
+import { Field, Formik, Form } from 'formik';
 import RegisterInput from './RegisterInput';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -24,10 +24,10 @@ const RegisterValidationSchema = Yup.object().shape({
     .min(8, 'Password is Too Short!')
     .max(50, 'Password is Too Long!')
     .required('Password is required'),
-  branch: Yup.string().required('Branch is required'),
+  
   bYear: Yup.string().required('Year is required'),
   bMonth: Yup.string().required('Month is required'),
-  bDay: Yup.string().required('Day is required'),
+  bDay: Yup.string().required('Day is required')
 });
 
 function Signup() {
@@ -93,9 +93,36 @@ function Signup() {
 
   // console.log(Day);
 
+  //validating Branch control
+  const validateBranch = ( value ) =>{       
+    if( !(value.length > 0 )  ){
+      setBranchError('Branch is required');
+    }else{
+      setBranchError('');
+    }
+  }
+
+ //validating gender
+  const validateGender= ( value ) =>{   
+    if( !(value.length > 0) ){
+      setGenderError('Gender is required');
+    }else{
+      setGenderError('');
+    }
+  }
+
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
-    // console.log(`${[name]}: ${value}`);
+    //  console.log(`${[name]}: ${value}`);
+
+    if( name === 'branch'){
+         validateBranch( value );       
+    }
+
+    if( name === 'gender'){
+        validateGender( value );      
+    }
+
     setRegister({
       ...register,
       [name]: value,
@@ -126,10 +153,14 @@ function Signup() {
             bDay,
           }}
           validationSchema={RegisterValidationSchema}
-          onSubmit={() => {}}
+          onSubmit={(values ) => { 
+            validateBranch( values.branch )
+            validateGender( values.gender )
+          }}
+         
         >
           {(formik) => (
-            <Form className='register_form'>
+            <Form className='register_form' onSubmit={formik.handleSubmit}>
               <div className='reg_line'>
                 <RegisterInput
                   name='firstName'
@@ -167,18 +198,20 @@ function Signup() {
                 </div> */}
               <div className='reg_line'>
                 <div className='reg_line_header'>Branch</div>
-                <select
-                  name='branch'
-                  id='branch'
-                  value={branch}
-                  onChange={handleRegisterChange}
-                >
-                  <option value='CSE'>CSE</option>
-                  <option value='IT'>IT</option>
-                  <option value='MECH'>MECH</option>
-                  <option value='CIVIL'>CIVIL</option>
-                  <option value='ECE'>ECE</option>
-                </select>
+                <Field as="select"
+                    name='branch'
+                    id='branch'
+                    value={branch}
+                    // validate={ validateBranch } //if uncommited, this causes unnecessaey error msg onChange event
+                    onChange={handleRegisterChange}                    
+                  >
+                    <option value="" disabled selected>Select branch</option>
+                    <option value='CSE'>CSE</option>
+                    <option value='IT'>IT</option>
+                    <option value='MECH'>MECH</option>
+                    <option value='CIVIL'>CIVIL</option>
+                    <option value='ECE'>ECE</option>
+                </Field>               
               </div>
               {branchError && <MessageError>{branchError}</MessageError>}
               <div className='reg_col'>
@@ -229,11 +262,10 @@ function Signup() {
                 <div className='reg_line_header'>
                   Gender <AiOutlineInfoCircle />
                 </div>
-                <div className='reg_grid'>
+                <div className='reg_grid' role="group">               
                   <label htmlFor='male'>
                     Male
-                    <input
-                      type='radio'
+                    <Field type="radio"
                       name='gender'
                       id='male'
                       value='male'
@@ -242,7 +274,7 @@ function Signup() {
                   </label>
                   <label htmlFor='female'>
                     Female
-                    <input
+                    <Field  
                       type='radio'
                       name='gender'
                       id='female'
@@ -252,14 +284,14 @@ function Signup() {
                   </label>
                   <label htmlFor='other'>
                     Other
-                    <input
+                    <Field
                       type='radio'
                       name='gender'
                       id='other'
                       value='other'
                       onChange={handleRegisterChange}
                     />
-                  </label>
+                  </label>                  
                 </div>
               </div>
               {genderError && <MessageError>{genderError}</MessageError>}
@@ -269,7 +301,7 @@ function Signup() {
                 <span> Cookie Policy.</span> You may receive SMS Notifications
                 from us and can opt out any time.
               </div>
-              <button type='submit' onSubmit={formik.handleSubmit}>
+              <button type='submit'>
                 Sign Up
               </button>
             </Form>

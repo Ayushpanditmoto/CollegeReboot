@@ -86,6 +86,53 @@ exports.verifyAccount = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+  const { email } = req.body.email;
+
+  const user = await UserModels.findOne(email);
+  if (!user) {
+    return next(new ErrorResponse('User not found', 404));
+  }
+
+  if (!user.verified) {
+    return next(new ErrorResponse('User has not verified', 403));
+  }
+
+  const resetToken = generateToken(user, process.env.JWT_EXPIRE);
+
+  const url = `${process.env.CLIENT_URL}/api/v1/reset-password/${resetToken}`;
+  console.log(url);
+  SentPasswordResetEmail(user.email, user.firstName, url);
+
+  res.status(200).json({
+    success: true,
+    email: user.email,
+    verified: user.verified,
+    message: 'Please check your email to reset your password.',
+  });
+})
+
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+  const {token, password} = req.body;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  
+  const user = await UserModels.findById(decoded.id);
+  if (!user) {
+    return next(new ErrorResponse('Invalid link or expired', 400));
+  }
+
+  const salt = await bycrypt.genSalt(10);
+  const hashPassword = await bycrypt.hash(password, salt);
+
+  user.password = hashPassword;
+  await user.save();
+  token.delete;
+  res.status(200).json({
+    success: true,
+    message: 'Password reset successfully',
+  });
+})
+
 exports.UserLogin = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   const user = await userModels.findOne({ email }).select('+password');
