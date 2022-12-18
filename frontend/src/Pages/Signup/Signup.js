@@ -128,7 +128,7 @@ function Signup() {
       [name]: value,
     });
   };
-  // console.log(register);
+  console.log(register);
   return (
     <Registeration>
       <div className='register'>
@@ -211,19 +211,7 @@ function Signup() {
                     <option value='MECH'>MECH</option>
                     <option value='CIVIL'>CIVIL</option>
                     <option value='ECE'>ECE</option>
-                </Field>
-                {/* <select
-                  name='branch'
-                  id='branch'
-                  value={branch}
-                  onChange={handleRegisterChange}
-                >
-                  <option value='CSE'>CSE</option>
-                  <option value='IT'>IT</option>
-                  <option value='MECH'>MECH</option>
-                  <option value='CIVIL'>CIVIL</option>
-                  <option value='ECE'>ECE</option>
-                </select> */}
+                </Field>               
               </div>
               {branchError && <MessageError>{branchError}</MessageError>}
               <div className='reg_col'>
