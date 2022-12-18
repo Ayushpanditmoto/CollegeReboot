@@ -120,7 +120,7 @@ function Signup() {
     }
 
     if( name === 'gender'){
-        setGenderError( '' );      
+        validateGender( value );      
     }
 
     setRegister({
