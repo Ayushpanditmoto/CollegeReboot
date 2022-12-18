@@ -93,12 +93,15 @@ function Signup() {
 
   // console.log(Day);
   const validateBranch = ( value ) =>{   
-
-    if( !value  ){
+    console.log( value)
+    if( !(value.length > 0 )  ){
       setBranchError('Branch is required');
+    }else{
+      setBranchError('');
     }
   }
 
+ 
   const validateGender= ( value ) =>{   
 
     if( !value  ){
@@ -108,13 +111,14 @@ function Signup() {
 
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
-    // console.log(`${[name]}: ${value}`);
+    //  console.log(`${[name]}: ${value}`);
+    validateBranch( value );
     setRegister({
       ...register,
       [name]: value,
     });
   };
-  console.log(register);
+  // console.log(register);
   return (
     <Registeration>
       <div className='register'>
@@ -139,7 +143,8 @@ function Signup() {
             bDay,
           }}
           validationSchema={RegisterValidationSchema}
-          onSubmit={() => {}}
+          onSubmit={(values ) => { validateBranch( values.branch )}}
+         
         >
           {(formik) => (
             <Form className='register_form'>
@@ -184,9 +189,10 @@ function Signup() {
                     name='branch'
                     id='branch'
                     value={branch}
-                    validate={ validateBranch }
-                    onChange={handleRegisterChange}
+                    // validate={ validateBranch }
+                    onChange={handleRegisterChange}                    
                   >
+                    <option value="" disabled selected>Select branch</option>
                     <option value='CSE'>CSE</option>
                     <option value='IT'>IT</option>
                     <option value='MECH'>MECH</option>
@@ -296,7 +302,7 @@ function Signup() {
                 <span> Cookie Policy.</span> You may receive SMS Notifications
                 from us and can opt out any time.
               </div>
-              <button type='submit' onSubmit={formik.handleSubmit}>
+              <button type='submit' onSubmit={formik.handleSubmit} >
                 Sign Up
               </button>
             </Form>
