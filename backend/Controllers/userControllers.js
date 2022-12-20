@@ -102,6 +102,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   const url = `${process.env.CLIENT_URL}/api/v1/reset-password/${resetToken}`;
   console.log(url);
+  // i need to work on this issue in future
   SentPasswordResetEmail(user.email, user.firstName, url);
 
   res.status(200).json({
@@ -110,12 +111,12 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     verified: user.verified,
     message: 'Please check your email to reset your password.',
   });
-})
+});
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {
-  const {token, password} = req.body;
+  const { token, password } = req.body;
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  
+
   const user = await UserModels.findById(decoded.id);
   if (!user) {
     return next(new ErrorResponse('Invalid link or expired', 400));
@@ -131,7 +132,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     success: true,
     message: 'Password reset successfully',
   });
-})
+});
 
 exports.UserLogin = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
