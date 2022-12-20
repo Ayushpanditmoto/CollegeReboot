@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineClose, AiOutlineInfoCircle } from 'react-icons/ai';
 import { Field, Formik, Form } from 'formik';
@@ -23,11 +23,8 @@ const RegisterValidationSchema = Yup.object().shape({
   password: Yup.string()
     .min(8, 'Password is Too Short!')
     .max(50, 'Password is Too Long!')
-    .required('Password is required'),
+    .required('Password is required')  
   
-  bYear: Yup.string().required('Year is required'),
-  bMonth: Yup.string().required('Month is required'),
-  bDay: Yup.string().required('Day is required')
 });
 
 function Signup() {
@@ -37,15 +34,17 @@ function Signup() {
     email: '',
     password: '',
     branch: '',
-    gender: '',
-    bYear: new Date().getFullYear(),
-    bMonth: new Date().getMonth() + 1,
-    bDay: new Date().getDate(),
+    gender: '', 
+    bYear: '',
+    bMonth: '',
+    bDay: '',
   };
+
   const [register, setRegister] = useState(UserInfo);
   const [dateError, setDateError] = useState('');
   const [genderError, setGenderError] = useState('');
   const [branchError, setBranchError] = useState('');
+ 
 
   const {
     firstName,
@@ -94,7 +93,8 @@ function Signup() {
   // console.log(Day);
 
   //validating Branch control
-  const validateBranch = ( value ) =>{       
+  const validateBranch = ( value ) =>{   
+       
     if( !(value.length > 0 )  ){
       setBranchError('Branch is required');
     }else{
@@ -103,7 +103,7 @@ function Signup() {
   }
 
  //validating gender
-  const validateGender= ( value ) =>{   
+  const validateGender = ( value ) =>{   
     if( !(value.length > 0) ){
       setGenderError('Gender is required');
     }else{
@@ -111,22 +111,69 @@ function Signup() {
     }
   }
 
+
+
+  const getAge = (  bYear , bMonth , bDay ) =>{
+    const UTC_YEAR_START = 1970;
+    const DOB = new Date( bYear, bMonth , bDay );
+    const timeDiffMiliSeconds = Date.now() - DOB.getTime();
+    const timeDiffDateFormat = new Date( timeDiffMiliSeconds );
+    return Math.abs( timeDiffDateFormat.getUTCFullYear() - UTC_YEAR_START );
+    
+  }
+
+  //validating age
+  const validateBirthDay = ( bYear , bMonth , bDay) =>{
+   
+    const AGE_ACCEPTED = 18;
+       
+    if(  !( bYear.length > 0 ) ||
+    !( bMonth.length > 0 )  ||
+    !( bDay.length > 0 ) ){
+
+      setDateError("Valid brithday is required");
+    }
+    else{ 
+      if( AGE_ACCEPTED > getAge( bYear, bMonth , bDay )){
+            setDateError("You should be over 18 to sign up");
+      }
+      
+    }  
+    
+   
+  }
+  
+  //clear any error msg when the birthday controls are selected
+  useEffect(()=>{
+    const MIN_LENGTH = 6;
+    let dateLength = register.bYear.length + register.bMonth.length + register.bDay.length
+  
+    if( dateLength >=  MIN_LENGTH ){
+      setDateError('')
+      validateBirthDay( register.bYear , register.bMonth , register.bDay )
+    }
+
+  })
+
   const handleRegisterChange = (e) => {
-    const { name, value } = e.target;
-    //  console.log(`${[name]}: ${value}`);
+      const { name, value } = e.target;
+      //  console.log(`${[name]}: ${value}`);
 
-    if( name === 'branch'){
-         validateBranch( value );       
-    }
+      if( name === 'branch' ){
+          if( value)
+          validateBranch( value );       
+      }
 
-    if( name === 'gender'){
-        validateGender( value );      
-    }
+      if( name === 'gender'){
+          validateGender( value );      
+      }
 
-    setRegister({
-      ...register,
-      [name]: value,
-    });
+           
+    
+      setRegister({
+        ...register,
+        [name]: value,
+      });
   };
   console.log(register);
   return (
@@ -152,11 +199,15 @@ function Signup() {
             bMonth,
             bDay,
           }}
+          
           validationSchema={RegisterValidationSchema}
           onSubmit={(values ) => { 
             validateBranch( values.branch )
             validateGender( values.gender )
+            validateBirthDay( values.bYear , values.bMonth , values.bDay )
           }}
+
+      
          
         >
           {(formik) => (
@@ -198,14 +249,13 @@ function Signup() {
                 </div> */}
               <div className='reg_line'>
                 <div className='reg_line_header'>Branch</div>
-                <Field as="select"
+                <Field as='select'
                     name='branch'
                     id='branch'
-                    value={branch}
-                    // validate={ validateBranch } //if uncommited, this causes unnecessaey error msg onChange event
+                    value={branch}                  
                     onChange={handleRegisterChange}                    
                   >
-                    <option value="" disabled selected>Select branch</option>
+                    <option value='' disabled defaultValue>Select branch</option>
                     <option value='CSE'>CSE</option>
                     <option value='IT'>IT</option>
                     <option value='MECH'>MECH</option>
@@ -219,42 +269,45 @@ function Signup() {
                   Date of Birth <AiOutlineInfoCircle />
                 </div>
                 <div className='reg_grid'>
-                  <select
+                  <Field as='select'
                     name='bDay'
                     id='bDay'
-                    value={bDay}
+                    value={bDay}                    
                     onChange={handleRegisterChange}
                   >
+                    <option value='' disabled defaultValue>date</option>
                     {Day.map((day, i) => (
                       <option key={i} value={day}>
                         {day}
                       </option>
                     ))}
-                  </select>
-                  <select
+                  </Field>
+                  <Field as='select'
                     name='bMonth'
                     id='bMonth'
-                    value={bMonth}
+                    value={bMonth}                    
                     onChange={handleRegisterChange}
                   >
+                      <option value='' disabled defaultValue>month</option>
                     {Month.map((month, i) => (
                       <option key={i} value={month}>
                         {MonthMap[month]}
                       </option>
                     ))}
-                  </select>
-                  <select
+                  </Field>
+                  <Field as='select'
                     name='bYear'
                     id='bYear'
-                    value={bYear}
+                    value={bYear}                  
                     onChange={handleRegisterChange}
                   >
+                      <option value='' disabled defaultValue>year</option>
                     {Year.map((year, i) => (
                       <option key={i} value={year}>
                         {year}
                       </option>
                     ))}
-                  </select>
+                  </Field>
                 </div>
               </div>
               {dateError && <MessageError>{dateError}</MessageError>}
@@ -301,7 +354,10 @@ function Signup() {
                 <span> Cookie Policy.</span> You may receive SMS Notifications
                 from us and can opt out any time.
               </div>
-              <button type='submit'>
+              <button type='submit' onClick= { ()=> { 
+                validateBranch( register.branch ) 
+                validateGender( register.gender ) 
+                validateBirthDay( register.bYear , register.bMonth , register.bDay ) }}> 
                 Sign Up
               </button>
             </Form>
