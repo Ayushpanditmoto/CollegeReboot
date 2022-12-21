@@ -69,7 +69,6 @@ const ResetContainer = styled.div`
 
 const ResetHeader = styled.div`
   width: 300px;
-
   display: flex;
   margin: 100px 0 40px;
   flex-direction: column;
