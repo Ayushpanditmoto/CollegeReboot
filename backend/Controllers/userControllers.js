@@ -102,6 +102,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   const url = `${process.env.CLIENT_URL}/api/v1/reset-password/${resetToken}`;
   console.log(url);
+  //we have to create this sent email function
   // i need to work on this issue in future
   SentPasswordResetEmail(user.email, user.firstName, url);
 
@@ -111,6 +112,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     verified: user.verified,
     message: 'Please check your email to reset your password.',
   });
+})
 });
 
 exports.authUser = asyncHandler(async (req, res, next) => {
@@ -122,8 +124,9 @@ exports.authUser = asyncHandler(async (req, res, next) => {
 });
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {
-  const { token, password } = req.body;
+  const {  token, password  } = req.body;
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
 
   const user = await UserModels.findById(decoded.id);
   if (!user) {

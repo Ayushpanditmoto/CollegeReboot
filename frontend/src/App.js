@@ -6,6 +6,7 @@ import Profile from './Pages/Profile/Profile';
 import Forgot from './Pages/ForgotPassword/ForgotPassword';
 import NotFound from './Pages/NotFound/NotFound';
 import Home from './Pages/Home/Home';
+import Reset from './Pages/ResetPassword/ResetPassword';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/forgot' element={<Forgot />} />
+        <Route path='/reset' element={<Reset />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/:path' element={<NotFound />} />
       </Routes>
