@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^7.6.0",
-    "js-cookie": "^3.0.1"
+    "concurrently": "^7.6.0"
+    
   }
 }
