@@ -158,8 +158,8 @@ exports.UserLogin = asyncHandler(async (req, res, next) => {
     lastName: user.lastName,
     email: user.email,
     verified: user.verified,
-    message:
-      'Login Successful, Welcome to CollegeWindow please check your email to verify your account',
+    // message:
+    //   'Login Successful, Welcome to CollegeWindow please check your email to verify your account',
   });
 });
 
