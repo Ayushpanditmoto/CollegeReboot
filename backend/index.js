@@ -14,14 +14,9 @@ const errorHandler = require('./Middleware/errorHandler');
 
 //other const
 const optionsCors = {
-  // origin: process.env.CLIENT_URL,
-  // origin: 'http://localhost:8000',
-  //add more origins
-  // origin: ['http://localhost:3000', process.env.CLIENT_URL],
-  origin:
-    process.env.NODE_ENV !== 'production'
-      ? 'http://localhost:8000'
-      : process.env.CLIENT_URL,
+  //for developement allow all and for production allow only client url
+
+  origin: process.env.NODE_ENV !== 'production' ? '*' : process.env.CLIENT_URL,
   optionsSuccessStatus: 200,
 };
 
