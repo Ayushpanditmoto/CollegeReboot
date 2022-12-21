@@ -19,6 +19,10 @@ const optionsCors = {
   optionsSuccessStatus: 200,
 };
 
+app.get('/', (req, res) => {
+  res.send('Backend is running');
+});
+
 //Middlewares
 app.use(express.json());
 app.use(cors(optionsCors));
