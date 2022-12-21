@@ -11,7 +11,8 @@ const errorHandler = (err, req, res, next) => {
   }
   //mongoose duplicate key
   if (err.code === 11000) {
-    const message = 'Duplicate field value entered';
+    const message =
+      'This email is already registered,Please try with another email';
     error = new ErrorResponse(message, 400);
   }
   //mongoose validation error

@@ -7,6 +7,9 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import Loading from '../../Components/Loading';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterValidationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -47,6 +50,8 @@ function Signup() {
   const [registerError, setRegisterError] = useState('');
   const [registerSuccess, setRegisterSuccess] = useState('');
   const [registerLoading, setRegisterLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const registerUser = async (values) => {
     setRegisterLoading(true);
@@ -59,7 +64,16 @@ function Signup() {
       setRegisterSuccess(data.message);
       setRegisterError('');
 
-      setRegister(UserInfo);
+      const { message, ...rest } = data;
+      // console.log(`message: ${message}`);
+      // console.log(`rest: ${rest}`);
+      setTimeout(() => {
+        // setRegisterSuccess('');
+        // setRegister(UserInfo);
+        dispatch({ type: 'LOGIN', payload: rest });
+        Cookies.set('user', JSON.stringify(rest));
+        navigate('/');
+      }, 2000);
     } catch (error) {
       console.log(error);
       setRegisterLoading(false);
@@ -391,14 +405,32 @@ function Signup() {
           )}
         </Formik>
         {registerLoading && <Loading loading={registerLoading} />}
-        {registerError && <MessageError>{registerError}</MessageError>}
-        {registerSuccess && <MessageError>{registerSuccess}</MessageError>}
+        {registerError && <ErrorRegister>{registerError}</ErrorRegister>}
+        {registerSuccess && (
+          <SuccessRegister>{registerSuccess}</SuccessRegister>
+        )}
       </div>
     </Registeration>
   );
 }
 
 export default Signup;
+
+const ErrorRegister = styled.div`
+  color: #c63b2c;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 10px 0;
+`;
+
+const SuccessRegister = styled.div`
+  color: #00efa7;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 10px 0;
+`;
 
 const MessageError = styled.div`
   color: white;

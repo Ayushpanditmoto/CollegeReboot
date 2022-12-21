@@ -1,3 +1,4 @@
+import Cookie from 'js-cookie';
 const initialState = {
   user: null,
   token: null,
@@ -6,9 +7,12 @@ const initialState = {
   error: null,
 };
 
-const userReducer = (state = initialState, action) => {
+const userReducer = (
+  state = Cookie.get('user') ? JSON.parse(Cookie.get('user')) : initialState,
+  action
+) => {
   switch (action.type) {
-    case 'USER_LOGIN':
+    case 'LOGIN':
       return {
         ...state,
         user: action.payload,
