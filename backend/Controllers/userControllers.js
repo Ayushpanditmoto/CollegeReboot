@@ -113,6 +113,13 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.authUser = asyncHandler(async (req, res, next) => {
+  return res.status(200).json({
+    success: true,
+    message: 'You are authorized',
+  });
+});
+
 exports.resetPassword = asyncHandler(async (req, res, next) => {
   const { token, password } = req.body;
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
