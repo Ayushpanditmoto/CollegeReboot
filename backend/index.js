@@ -12,7 +12,8 @@ const errorHandler = require('./Middleware/errorHandler');
 
 //other const
 const optionsCors = {
-  origin: process.env.CLIENT_URL,
+  // origin: process.env.CLIENT_URL,
+  origin: 'http://localhost:8000',
   optionsSuccessStatus: 200,
 };
 
