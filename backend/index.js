@@ -12,13 +12,26 @@ const morgan = require('morgan');
 const fs = require('fs');
 const errorHandler = require('./Middleware/errorHandler');
 
+let AllowedLinks = [
+  'http://localhost:3000',
+  'https://collegerebootbackend.onrender.com',
+];
 //other const
-const optionsCors = {
-  //for developement allow all and for production allow only client url
-
-  origin: process.env.NODE_ENV !== 'production' ? '*' : process.env.CLIENT_URL,
-  optionsSuccessStatus: 200,
-};
+function corsOptions(res, req) {
+  let tmp;
+  let origin = req.header('Origin');
+  if (AllowedLinks.indexOf(origin) !== -1) {
+    tmp = {
+      origin: true,
+      optionSuccessStatus: 200,
+    };
+  } else {
+    tmp = {
+      origin: false,
+    };
+  }
+  res(null, tmp);
+}
 
 app.get('/', (req, res) => {
   res.send('Backend is running');
@@ -26,7 +39,12 @@ app.get('/', (req, res) => {
 
 //Middlewares
 app.use(express.json());
-app.use(cors(optionsCors));
+app.use(
+  cors({
+    origin: '*',
+    optionSuccessStatus: 200,
+  })
+);
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
