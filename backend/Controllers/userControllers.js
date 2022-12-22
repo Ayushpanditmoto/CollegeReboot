@@ -1,15 +1,15 @@
-const UserModels = require('../Models/userModels');
-const ErrorResponse = require('../Utils/errorResponse');
-const asyncHandler = require('../Middleware/asyncHandler');
-const generateToken = require('../Utils/generateToken');
-const bycrypt = require('bcryptjs');
-const { validateGenerateUsername } = require('../Utils/validation');
-const { SentVerificationEmail } = require('../Utils/mailer');
-const jwt = require('jsonwebtoken');
-const userModels = require('../Models/userModels');
+const UserModels = require("../Models/userModels");
+const ErrorResponse = require("../Utils/errorResponse");
+const asyncHandler = require("../Middleware/asyncHandler");
+const generateToken = require("../Utils/generateToken");
+const bycrypt = require("bcryptjs");
+const { validateGenerateUsername } = require("../Utils/validation");
+const { SentVerificationEmail } = require("../Utils/mailer");
+const jwt = require("jsonwebtoken");
+const userModels = require("../Models/userModels");
 
 exports.home = (req, res) => {
-  res.send('Hello World!');
+  res.send("Hello World!");
 };
 exports.UserRegister = asyncHandler(async (req, res, next) => {
   const {
@@ -27,7 +27,7 @@ exports.UserRegister = asyncHandler(async (req, res, next) => {
   const userCheck = await UserModels.findOne({ email, userName });
   // console.log(userCheck);
   if (userCheck) {
-    return next(new ErrorResponse('User already exists', 400));
+    return next(new ErrorResponse("User already exists", 400));
   }
   const salt = await bycrypt.genSalt(10);
   const hashPassword = await bycrypt.hash(password, salt);
@@ -46,7 +46,7 @@ exports.UserRegister = asyncHandler(async (req, res, next) => {
     bMonth,
     bDay,
   });
-  const emailVerificationToken = generateToken(user, '30m');
+  const emailVerificationToken = generateToken(user, "30m");
   console.log(emailVerificationToken);
   const url = `${process.env.CLIENT_URL}/api/v1/verify/${emailVerificationToken}`;
   console.log(url);
@@ -62,7 +62,7 @@ exports.UserRegister = asyncHandler(async (req, res, next) => {
     lastName: user.lastName,
     email: user.email,
     verified: user.verified,
-    message: 'Please check your email to verify your account',
+    message: "Please check your email to verify your account",
   });
 });
 
@@ -71,18 +71,18 @@ exports.verifyAccount = asyncHandler(async (req, res, next) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const user = await UserModels.findById(decoded.id);
   if (!user) {
-    return next(new ErrorResponse('User not found', 404));
+    return next(new ErrorResponse("User not found", 404));
   }
 
   if (user.verified) {
-    return next(new ErrorResponse('User already verified', 400));
+    return next(new ErrorResponse("User already verified", 400));
   }
 
   user.verified = true;
   await user.save();
   res.status(200).json({
     success: true,
-    message: 'Account verified successfully',
+    message: "Account verified successfully",
   });
 });
 
@@ -91,11 +91,11 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   const user = await UserModels.findOne(email);
   if (!user) {
-    return next(new ErrorResponse('User not found', 404));
+    return next(new ErrorResponse("User not found", 404));
   }
 
   if (!user.verified) {
-    return next(new ErrorResponse('User has not verified', 403));
+    return next(new ErrorResponse("User has not verified", 403));
   }
 
   const resetToken = generateToken(user, process.env.JWT_EXPIRE);
@@ -110,27 +110,25 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     success: true,
     email: user.email,
     verified: user.verified,
-    message: 'Please check your email to reset your password.',
+    message: "Please check your email to reset your password.",
   });
-})
 });
 
 exports.authUser = asyncHandler(async (req, res, next) => {
   return res.status(200).json({
     success: true,
     user: req.user.id,
-    message: 'You are authorized',
+    message: "You are authorized",
   });
 });
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {
-  const {  token, password  } = req.body;
+  const { token, password } = req.body;
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
 
   const user = await UserModels.findById(decoded.id);
   if (!user) {
-    return next(new ErrorResponse('Invalid link or expired', 400));
+    return next(new ErrorResponse("Invalid link or expired", 400));
   }
 
   const salt = await bycrypt.genSalt(10);
@@ -141,24 +139,24 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   token.delete;
   res.status(200).json({
     success: true,
-    message: 'Password reset successfully',
+    message: "Password reset successfully",
   });
 });
 
 exports.UserLogin = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
-  const user = await userModels.findOne({ email }).select('+password');
+  const user = await userModels.findOne({ email }).select("+password");
   if (!user) {
     return next(
       new ErrorResponse(
-        'Please Create a new Account, this Email does not Link with CollegeWindow',
+        "Please Create a new Account, this Email does not Link with CollegeWindow",
         401
       )
     );
   }
   const isMatch = await bycrypt.compare(password, user.password);
   if (!isMatch) {
-    return next(new ErrorResponse('The Password You Entered is Wrong', 401));
+    return next(new ErrorResponse("The Password You Entered is Wrong", 401));
   }
   const token = generateToken(user, process.env.JWT_EXPIRE);
   res.status(200).json({
@@ -175,7 +173,7 @@ exports.UserLogin = asyncHandler(async (req, res, next) => {
 });
 
 exports.UserLogout = asyncHandler(async (req, res) => {
-  res.cookie('token', 'none', {
+  res.cookie("token", "none", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true, // only accessible by the web server
   });
