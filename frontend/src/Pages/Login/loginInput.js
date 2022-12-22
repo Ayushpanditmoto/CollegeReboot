@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useField, ErrorMessage } from 'formik';
-
 function LoginInput({ placeholder, ...props }) {
   const [field, meta] = useField(props);
   return (
