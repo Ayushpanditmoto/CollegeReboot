@@ -145,10 +145,7 @@ const ButtonWrapper = styled.div`
 const ResetForm = styled.div`
   background-color: var(--bg-primary);
   height: fit-content;
-
-
   width: 550px;  
-
   border-radius: 10px;
   display: flex;
   box-shadow: 0 1px 2px var(--shadow-1);
