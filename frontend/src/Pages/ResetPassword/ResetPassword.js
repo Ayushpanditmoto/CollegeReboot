@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Formik, Form } from 'formik';
-import PasswordInput from './PasswordInput';
-import { redirect } from 'react-router-dom';
-import * as Yup from 'yup';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Formik, Form } from "formik";
+import PasswordInput from "./PasswordInput";
+import { redirect } from "react-router-dom";
+import * as Yup from "yup";
 
 const PasswordValidationSchema = Yup.object({
   password: Yup.string()
-    .min(8, 'Password is Too Short!')
-    .max(50, 'Password is Too Long!')
-    .required('Password is required'),
+    .min(8, "Password is Too Short!")
+    .max(50, "Password is Too Long!")
+    .required("Password is required"),
 
   confirmPassword: Yup.string()
-    .min(8, 'Password is Too Short!')
-    .max(50, 'Password is Too Long!')
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm Password is required'),
+    .min(8, "Password is Too Short!")
+    .max(50, "Password is Too Long!")
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
 });
 
 function ResetPassword() {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -31,21 +31,23 @@ function ResetPassword() {
   };
 
   const clearInput = () => {
-    setPassword('');
-    setConfirmPassword('');
+    setPassword("");
+    setConfirmPassword("");
+
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = fetch('/reset-password', {
-      method: 'POST',
+    const response = fetch("/reset-password", {
+      method: "POST",
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
       body: JSON.stringify({
         password: password,
-        Authorization: 'TestReturnedToken',
+        Authorization: "TestReturnedToken",
+
       }),
     });
 
@@ -55,8 +57,7 @@ function ResetPassword() {
       const message = `An error has occured: ${response.status}`;
       throw new Error(message);
     }
-
-    return redirect('/');
+    return redirect("/");
   };
 
   return (
@@ -77,24 +78,27 @@ function ResetPassword() {
           >
             <Form>
               <PasswordInput
-                name='password'
-                placeholder='New Password'
-                type='password'
+                name="password"
+                placeholder="New Password"
+                type="password"
+
                 onChange={handlePasswordChange}
               />
 
               <PasswordInput
-                name='confirmPassword'
-                placeholder='Confirm new Password'
-                type='password'
+                name="confirmPassword"
+                placeholder="Confirm new Password"
+                type="password"
+
                 onChange={handleConfirmPasswordChange}
               />
 
               <ButtonWrapper>
-                <button type='reset' onClick={clearInput}>
+                <button type="reset" onClick={clearInput}>
                   Cancel
                 </button>
-                <button type='submit'>Continue</button>
+                <button type="submit">Continue</button>
+
               </ButtonWrapper>
             </Form>
           </Formik>
@@ -192,18 +196,17 @@ const ResetForm = styled.div`
     margin: 10px 5px;
   }
 
-  [type='reset'] {
+  [type="reset"] {
     background-color: var(--bg-third);
     color: var(--color-secondary);
   }
 
   @media screen and (max-width: 300px) {
-    margin: 0 0.5rem;
-    width: 100%;
+    width: 92%;
   }
 
   @media screen and (max-width: 768px) {
-    margin: 0 0.5rem;
-    width: 100%;
+    width: 92%;
+
   }
 `;

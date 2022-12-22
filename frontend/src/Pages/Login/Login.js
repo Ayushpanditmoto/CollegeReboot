@@ -1,31 +1,31 @@
-import React, { useState , useRef } from 'react';
-import styled from 'styled-components';
-import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
-import { Formik, Form } from 'formik';
-import { Link } from 'react-router-dom';
-import LoginInput from './loginInput';
-import * as Yup from 'yup';
+import React, { useState, useRef } from "react";
+import styled from "styled-components";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { Formik, Form } from "formik";
+import { Link } from "react-router-dom";
+import LoginInput from "./loginInput";
+import * as Yup from "yup";
 
 // import RegisterForm from './Components/Login/RegisterForm';
-import Loading from '../../Components/Loading';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import Loading from "../../Components/Loading";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const loginInfos = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
 };
 
 const LoginValidationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid Email Address')
-    .required('Email is required'),
+    .email("Invalid Email Address")
+    .required("Email is required"),
   password: Yup.string()
-    .min(8, 'Password is Too Short!')
-    .max(50, 'Password is Too Long!')
-    .required('Password is required'),
+    .min(8, "Password is Too Short!")
+    .max(50, "Password is Too Long!")
+    .required("Password is required"),
 });
 
 //JSON.stringify(login) is used to convert the object into a string
@@ -41,8 +41,8 @@ const LoginValidationSchema = Yup.object().shape({
 // ); // {email: "", password: ""}
 
 function Login() {
-  const [Error, setError] = useState('');
-  const [Success, setSuccess] = useState('');
+  const [Error, setError] = useState("");
+  const [Success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,10 +59,10 @@ function Login() {
       );
       setLoading(false);
       setSuccess(data.message);
-      Cookies.set('user', data.token);
-      dispatch({ type: 'LOGIN', payload: data.user });
+      Cookies.set("user", data.token);
+      dispatch({ type: "LOGIN", payload: data.user });
       setTimeout(() => {
-        navigate('/home');
+        navigate("/home");
       }, 2000);
     } catch (error) {
       setError(error.response.data.error);
@@ -72,23 +72,23 @@ function Login() {
 
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
-  const [ toggleEye, setToggleEye] = useState(<AiOutlineEye />)
-  const [ isPasswordVisible, setIspasswordVisible ] = useState( false ); 
-  const inputRef = useRef(null);;
+  const [toggleEye, setToggleEye] = useState(<AiOutlineEye />);
+  const [isPasswordVisible, setIspasswordVisible] = useState(false);
+  const inputRef = useRef(null);
 
-  const showPassword = () => {   
-    const passwordInput = inputRef.current.firstElementChild.firstElementChild; 
-    
-    if ( !isPasswordVisible ) {
-      setIspasswordVisible( true );
-      passwordInput.setAttribute("type","password");
-      setToggleEye(<AiOutlineEyeInvisible/>);
-    }else{
-      setIspasswordVisible( false );
-      passwordInput.setAttribute("type","text");
-      setToggleEye(<AiOutlineEye/>);
+  const showPassword = () => {
+    const passwordInput = inputRef.current.firstElementChild.firstElementChild;
+
+    if (!isPasswordVisible) {
+      setIspasswordVisible(true);
+      passwordInput.setAttribute("type", "password");
+      setToggleEye(<AiOutlineEyeInvisible />);
+    } else {
+      setIspasswordVisible(false);
+      passwordInput.setAttribute("type", "text");
+      setToggleEye(<AiOutlineEye />);
     }
-  }
+  };
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -123,23 +123,24 @@ function Login() {
             {(formik) => (
               <Form>
                 <LoginInput
-                  name='email'
-                  placeholder='Email'
-                  type='email'
+                  name="email"
+                  placeholder="Email"
+                  type="email"
                   onChange={handleLoginChange}
-                />                
-                <div className='password-wrapper' ref={inputRef}>
+                />
+                <div className="password-wrapper" ref={inputRef}>
                   <LoginInput
-                    type='password'
-                    name='password'
-                    placeholder='Password'                                    
+                    type="password"
+                    name="password"
+                    placeholder="Password"
                     onChange={handleLoginChange}
-                    
-                  />                  
+                  />
                 </div>
-                <span className='eyeslash-icon' onClick={ showPassword }>{ toggleEye }</span>
-                
-               <button type='submit' onSubmit={formik.handleSubmit}>
+                <span className="eyeslash-icon" onClick={showPassword}>
+                  {toggleEye}
+                </span>
+
+                <button type="submit" onSubmit={formik.handleSubmit}>
                   Login
                 </button>
                 {loading && <Loading />}
@@ -148,12 +149,12 @@ function Login() {
               </Form>
             )}
           </Formik>
-          <Link to='/forgot' className='forgot'>
+          <Link to="/forgot" className="forgot">
             Forgotten Password ?
           </Link>
-          <div className='sign_splitter'></div>
-          <Link to='/signup'>
-            <button className='signup'>Sign Up</button>
+          <div className="sign_splitter"></div>
+          <Link to="/signup">
+            <button className="signup">Sign Up</button>
           </Link>
         </LoginForm>
       </LoginContainer>
@@ -274,16 +275,17 @@ const LoginForm = styled.div`
     box-shadow: var(--shadow-1);
   }
 
-  .password-wrapper{
-    display:inline-flex;
+  .password-wrapper {
+    display: inline-flex;
   }
 
   .eyeslash-icon {
     position: relative;
-    top: -45px;
-    right: -295px;
-    color:var(--shadow-3);
-}
+    top: -47px;
+    font-size: 1.7rem;
+    right: -286px;
+    color: var(--shadow-3);
+  }
 `;
 
 const Footer = styled.div`
