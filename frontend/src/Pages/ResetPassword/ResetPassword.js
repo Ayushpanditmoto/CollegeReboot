@@ -33,6 +33,7 @@ function ResetPassword() {
   const clearInput = () => {
     setPassword("");
     setConfirmPassword("");
+
   };
 
   const handleSubmit = async (e) => {
@@ -46,6 +47,7 @@ function ResetPassword() {
       body: JSON.stringify({
         password: password,
         Authorization: "TestReturnedToken",
+
       }),
     });
 
@@ -55,7 +57,6 @@ function ResetPassword() {
       const message = `An error has occured: ${response.status}`;
       throw new Error(message);
     }
-
     return redirect("/");
   };
 
@@ -80,6 +81,7 @@ function ResetPassword() {
                 name="password"
                 placeholder="New Password"
                 type="password"
+
                 onChange={handlePasswordChange}
               />
 
@@ -87,6 +89,7 @@ function ResetPassword() {
                 name="confirmPassword"
                 placeholder="Confirm new Password"
                 type="password"
+
                 onChange={handleConfirmPasswordChange}
               />
 
@@ -95,6 +98,7 @@ function ResetPassword() {
                   Cancel
                 </button>
                 <button type="submit">Continue</button>
+
               </ButtonWrapper>
             </Form>
           </Formik>
@@ -114,6 +118,7 @@ const ResetContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding: 0 1rem;
 `;
 
 const ResetHeader = styled.div`
@@ -144,6 +149,7 @@ const ResetForm = styled.div`
   width: 550px;
   border-radius: 10px;
   display: flex;
+  margin: 0 1rem;
   box-shadow: 0 1px 2px var(--shadow-1);
   padding: 1rem;
   flex-direction: column;
@@ -201,5 +207,6 @@ const ResetForm = styled.div`
 
   @media screen and (max-width: 768px) {
     width: 92%;
+
   }
 `;
