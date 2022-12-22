@@ -112,7 +112,6 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     verified: user.verified,
     message: 'Please check your email to reset your password.',
   });
-})
 });
 
 exports.authUser = asyncHandler(async (req, res, next) => {
@@ -124,9 +123,8 @@ exports.authUser = asyncHandler(async (req, res, next) => {
 });
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {
-  const {  token, password  } = req.body;
+  const { token, password } = req.body;
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
 
   const user = await UserModels.findById(decoded.id);
   if (!user) {
