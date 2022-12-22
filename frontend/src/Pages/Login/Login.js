@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState , useRef } from 'react';
 import styled from 'styled-components';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import LoginInput from './loginInput';
 import * as Yup from 'yup';
+
 // import RegisterForm from './Components/Login/RegisterForm';
 import Loading from '../../Components/Loading';
 import axios from 'axios';
@@ -70,6 +72,24 @@ function Login() {
 
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
+  const [ toggleEye, setToggleEye] = useState(<AiOutlineEye />)
+  const [ isPasswordVisible, setIspasswordVisible ] = useState( false ); 
+  const inputRef = useRef(null);;
+
+  const showPassword = () => {   
+    const passwordInput = inputRef.current.firstElementChild.firstElementChild; 
+    
+    if ( !isPasswordVisible ) {
+      setIspasswordVisible( true );
+      passwordInput.setAttribute("type","password");
+      setToggleEye(<AiOutlineEyeInvisible/>);
+    }else{
+      setIspasswordVisible( false );
+      passwordInput.setAttribute("type","text");
+      setToggleEye(<AiOutlineEye/>);
+    }
+  }
+
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLogin({
@@ -107,14 +127,19 @@ function Login() {
                   placeholder='Email'
                   type='email'
                   onChange={handleLoginChange}
-                />
-                <LoginInput
-                  type='password'
-                  name='password'
-                  placeholder='Password'
-                  onChange={handleLoginChange}
-                />
-                <button type='submit' onSubmit={formik.handleSubmit}>
+                />                
+                <div className='password-wrapper' ref={inputRef}>
+                  <LoginInput
+                    type='password'
+                    name='password'
+                    placeholder='Password'                                    
+                    onChange={handleLoginChange}
+                    
+                  />                  
+                </div>
+                <span className='eyeslash-icon' onClick={ showPassword }>{ toggleEye }</span>
+                
+               <button type='submit' onSubmit={formik.handleSubmit}>
                   Login
                 </button>
                 {loading && <Loading />}
@@ -248,6 +273,17 @@ const LoginForm = styled.div`
     margin: 10px 0;
     box-shadow: var(--shadow-1);
   }
+
+  .password-wrapper{
+    display:inline-flex;
+  }
+
+  .eyeslash-icon {
+    position: relative;
+    top: -45px;
+    right: -295px;
+    color:var(--shadow-3);
+}
 `;
 
 const Footer = styled.div`

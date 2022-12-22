@@ -1,7 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useField, ErrorMessage } from 'formik';
-function LoginInput({ placeholder, ...props }) {
+import React from "react";
+import styled from "styled-components";
+import { useField, ErrorMessage } from "formik";
+
+function PasswordInput({ placeholder, ...props }) {
   const [field, meta] = useField(props);
   return (
     <InputWrap>
@@ -10,7 +11,7 @@ function LoginInput({ placeholder, ...props }) {
       )}
 
       <input
-        className={meta.touched && meta.error && 'input_error_border'}
+        className={meta.touched && meta.error ? "input_error_border" : ""}
         type={field.type}
         name={field.name}
         placeholder={placeholder}
@@ -21,7 +22,7 @@ function LoginInput({ placeholder, ...props }) {
   );
 }
 
-export default LoginInput;
+export default PasswordInput;
 
 const InputWrap = styled.div`
   position: relative;
@@ -29,7 +30,6 @@ const InputWrap = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-1);
-  /* justify-content: center; */
   align-items: center;
   input {
     width: 100%;
@@ -50,6 +50,10 @@ const InputWrap = styled.div`
     border: 1px solid red;
     border-color: red !important;
   }
+
+  @media screen and (max-width: 300px) {
+    width:90vw;
+  }
 `;
 
 const InputError = styled.div`
@@ -62,7 +66,7 @@ const InputError = styled.div`
   color: white;
   font-size: 1rem;
   display: flex;
-  padding: 10px 0;
+  padding: 10px 5px;
   border-radius: 5px;
   box-shadow: var(--shadow-1);
   justify-content: center;
