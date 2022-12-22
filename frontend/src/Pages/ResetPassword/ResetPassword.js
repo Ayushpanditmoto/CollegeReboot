@@ -131,7 +131,7 @@ const ResetHeader = styled.div`
 
 const ButtonWrapper = styled.div`
   display:flex;
-  justify-content: right;
+  justify-content: center;
   margin-top:8px;
   border-top: solid 1px var(--bg-third);
   width:100%;
@@ -140,7 +140,6 @@ const ButtonWrapper = styled.div`
 const ResetForm = styled.div`
   background-color: var(--bg-primary);
   height: fit-content;
-  width: 550px;
   border-radius: 10px;
   display: flex;
   box-shadow: 0 1px 2px var(--shadow-1);
@@ -152,6 +151,7 @@ const ResetForm = styled.div`
   h2 {
     font-size: 1.6rem;
     font-weight: 900;
+    text-align: center;
     color: #0088ff;
     padding-bottom:8px;
     margin-bottom: 8px;
@@ -160,6 +160,7 @@ const ResetForm = styled.div`
  
   p{
     padding:10px 0px;
+    text-align: center;
   }
 
   hr{
