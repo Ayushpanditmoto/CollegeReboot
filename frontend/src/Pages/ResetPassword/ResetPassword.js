@@ -1,26 +1,26 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Formik, Form } from "formik";
-import PasswordInput from "./PasswordInput";
-import { redirect } from "react-router-dom";
-import * as Yup from "yup";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Formik, Form } from 'formik';
+import PasswordInput from './PasswordInput';
+import { redirect } from 'react-router-dom';
+import * as Yup from 'yup';
 
 const PasswordValidationSchema = Yup.object({
   password: Yup.string()
-    .min(8, "Password is Too Short!")
-    .max(50, "Password is Too Long!")
-    .required("Password is required"),
+    .min(8, 'Password is Too Short!')
+    .max(50, 'Password is Too Long!')
+    .required('Password is required'),
 
   confirmPassword: Yup.string()
-    .min(8, "Password is Too Short!")
-    .max(50, "Password is Too Long!")
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
+    .min(8, 'Password is Too Short!')
+    .max(50, 'Password is Too Long!')
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm Password is required'),
 });
 
 function ResetPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -31,21 +31,21 @@ function ResetPassword() {
   };
 
   const clearInput = () => {
-    setPassword("");
-    setConfirmPassword("");
+    setPassword('');
+    setConfirmPassword('');
+
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const response = fetch("/reset-password", {
-      method: "POST",
+    const response = fetch('/reset-password', {
+      method: 'POST',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
         password: password,
-        Authorization: "TestReturnedToken",
+        Authorization: 'TestReturnedToken',
       }),
     });
 
@@ -56,8 +56,7 @@ function ResetPassword() {
       throw new Error(message);
     }
 
-    return redirect("/");
-  };
+    return redirect('/');
 
   return (
     <React.Fragment>
@@ -77,24 +76,24 @@ function ResetPassword() {
           >
             <Form>
               <PasswordInput
-                name="password"
-                placeholder="New Password"
-                type="password"
+                name='password'
+                placeholder='New Password'
+                type='password'
                 onChange={handlePasswordChange}
               />
 
               <PasswordInput
-                name="confirmPassword"
-                placeholder="Confirm new Password"
-                type="password"
+                name='confirmPassword'
+                placeholder='Confirm new Password'
+                type='password'
                 onChange={handleConfirmPasswordChange}
               />
 
               <ButtonWrapper>
-                <button type="reset" onClick={clearInput}>
+                <button type='reset' onClick={clearInput}>
                   Cancel
                 </button>
-                <button type="submit">Continue</button>
+                <button type='submit'>Continue</button>
               </ButtonWrapper>
             </Form>
           </Formik>
@@ -114,6 +113,7 @@ const ResetContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding: 0 1rem;
 `;
 
 const ResetHeader = styled.div`
@@ -127,10 +127,15 @@ const ResetHeader = styled.div`
 
 const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: right;
+  justify-content: center;
   margin-top: 8px;
   border-top: solid 1px var(--bg-third);
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    justify-content: space-evenly;
+  }
 `;
 
 const ResetForm = styled.div`
@@ -139,6 +144,7 @@ const ResetForm = styled.div`
   width: 550px;
   border-radius: 10px;
   display: flex;
+  margin: 0 1rem;
   box-shadow: 0 1px 2px var(--shadow-1);
   padding: 1rem;
   flex-direction: column;
@@ -148,6 +154,7 @@ const ResetForm = styled.div`
   h2 {
     font-size: 1.6rem;
     font-weight: 900;
+    text-align: center;
     color: #0088ff;
     padding-bottom: 8px;
     margin-bottom: 8px;
@@ -156,6 +163,7 @@ const ResetForm = styled.div`
 
   p {
     padding: 10px 0px;
+    text-align: center;
   }
 
   hr {
@@ -183,8 +191,19 @@ const ResetForm = styled.div`
     margin: 10px 5px;
   }
 
-  [type="reset"] {
+  [type='reset'] {
+
     background-color: var(--bg-third);
     color: var(--color-secondary);
+  }
+
+  @media screen and (max-width: 300px) {
+    margin: 0 0.5rem;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin: 0 0.5rem;
+    width: 100%;
   }
 `;

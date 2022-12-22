@@ -50,6 +50,10 @@ const InputWrap = styled.div`
     border: 1px solid red;
     border-color: red !important;
   }
+
+  @media screen and (max-width: 300px) {
+    width:90vw;
+  }
 `;
 
 const InputError = styled.div`
