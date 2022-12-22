@@ -14,7 +14,7 @@ function NotFound() {
             to the Home page
           </h2>
           <h3>
-            <Link to="/">Click Here to go to Home</Link>
+            <Link to="/">Click Here to go to Home Page</Link>
           </h3>
         </Link>
       </NotFoundHeader>
