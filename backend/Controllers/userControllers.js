@@ -102,6 +102,8 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   const url = `${process.env.CLIENT_URL}/api/v1/reset-password/${resetToken}`;
   console.log(url);
+  //we have to create this sent email function
+  // i need to work on this issue in future
   SentPasswordResetEmail(user.email, user.firstName, url);
 
   res.status(200).json({
@@ -110,12 +112,20 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     verified: user.verified,
     message: 'Please check your email to reset your password.',
   });
-})
+});
+
+exports.authUser = asyncHandler(async (req, res, next) => {
+  return res.status(200).json({
+    success: true,
+    user: req.user.id,
+    message: 'You are authorized',
+  });
+});
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {
-  const {token, password} = req.body;
+  const { token, password } = req.body;
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  
+
   const user = await UserModels.findById(decoded.id);
   if (!user) {
     return next(new ErrorResponse('Invalid link or expired', 400));
@@ -131,7 +141,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     success: true,
     message: 'Password reset successfully',
   });
-})
+});
 
 exports.UserLogin = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
@@ -157,8 +167,8 @@ exports.UserLogin = asyncHandler(async (req, res, next) => {
     lastName: user.lastName,
     email: user.email,
     verified: user.verified,
-    message:
-      'Login Successful, Welcome to CollegeWindow please check your email to verify your account',
+    // message:
+    //   'Login Successful, Welcome to CollegeWindow please check your email to verify your account',
   });
 });
 

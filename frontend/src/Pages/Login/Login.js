@@ -7,6 +7,11 @@ import LoginInput from './loginInput';
 import * as Yup from 'yup';
 
 // import RegisterForm from './Components/Login/RegisterForm';
+import Loading from '../../Components/Loading';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const loginInfos = {
   email: '',
@@ -36,6 +41,35 @@ const LoginValidationSchema = Yup.object().shape({
 // ); // {email: "", password: ""}
 
 function Login() {
+  const [Error, setError] = useState('');
+  const [Success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLoginSubmit = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/v1/login`,
+        {
+          email,
+          password,
+        }
+      );
+      setLoading(false);
+      setSuccess(data.message);
+      Cookies.set('user', data.token);
+      dispatch({ type: 'LOGIN', payload: data.user });
+      setTimeout(() => {
+        navigate('/home');
+      }, 2000);
+    } catch (error) {
+      setError(error.response.data.error);
+      setLoading(false);
+    }
+  };
+
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
   const [ toggleEye, setToggleEye] = useState(<AiOutlineEye />)
@@ -63,6 +97,7 @@ function Login() {
       [name]: value,
     });
   };
+
   return (
     <>
       <LoginContainer>
@@ -81,6 +116,9 @@ function Login() {
               password,
             }}
             validationSchema={LoginValidationSchema}
+            onSubmit={() => {
+              handleLoginSubmit();
+            }}
           >
             {(formik) => (
               <Form>
@@ -89,8 +127,7 @@ function Login() {
                   placeholder='Email'
                   type='email'
                   onChange={handleLoginChange}
-                />
-                
+                />                
                 <div className='password-wrapper' ref={inputRef}>
                   <LoginInput
                     type='password'
@@ -102,7 +139,12 @@ function Login() {
                 </div>
                 <span className='eyeslash-icon' onClick={ showPassword }>{ toggleEye }</span>
                 
-                <button type='submit'>Login</button>
+               <button type='submit' onSubmit={formik.handleSubmit}>
+                  Login
+                </button>
+                {loading && <Loading />}
+                {Error && <ErrorRegister>{Error}</ErrorRegister>}
+                {Success && <SuccessRegister>{Success}</SuccessRegister>}
               </Form>
             )}
           </Formik>
@@ -124,6 +166,22 @@ function Login() {
 }
 
 export default Login;
+
+const ErrorRegister = styled.div`
+  color: #c63b2c;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 10px 0;
+`;
+
+const SuccessRegister = styled.div`
+  color: #00efa7;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 10px 0;
+`;
 
 const LoginContainer = styled.div`
   width: 100%;

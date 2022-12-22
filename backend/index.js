@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, 'config/config.env') });
+if (process.env.NODE_ENV !== 'production')
+  require('dotenv').config({ path: path.join(__dirname, 'config/config.env') });
+else require('dotenv').config();
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -10,15 +12,39 @@ const morgan = require('morgan');
 const fs = require('fs');
 const errorHandler = require('./Middleware/errorHandler');
 
+let AllowedLinks = [
+  'http://localhost:3000',
+  'https://collegerebootbackend.onrender.com',
+];
 //other const
-const optionsCors = {
-  origin: process.env.CLIENT_URL,
-  optionsSuccessStatus: 200,
-};
+function corsOptions(res, req) {
+  let tmp;
+  let origin = req.header('Origin');
+  if (AllowedLinks.indexOf(origin) !== -1) {
+    tmp = {
+      origin: true,
+      optionSuccessStatus: 200,
+    };
+  } else {
+    tmp = {
+      origin: false,
+    };
+  }
+  res(null, tmp);
+}
+
+app.get('/', (req, res) => {
+  res.send('Backend is running');
+});
 
 //Middlewares
 app.use(express.json());
-app.use(cors(optionsCors));
+app.use(
+  cors({
+    origin: '*',
+    optionSuccessStatus: 200,
+  })
+);
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
