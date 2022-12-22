@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Formik, Form } from 'formik';
-import { Link } from 'react-router-dom';
-import LoginInput from './loginInput';
-import * as Yup from 'yup';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Formik, Form } from "formik";
+import { Link } from "react-router-dom";
+import LoginInput from "./loginInput";
+import * as Yup from "yup";
 // import RegisterForm from './Components/Login/RegisterForm';
-import Loading from '../../Components/Loading';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import Loading from "../../Components/Loading";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const loginInfos = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
 };
 
 const LoginValidationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid Email Address')
-    .required('Email is required'),
+    .email("Invalid Email Address")
+    .required("Email is required"),
   password: Yup.string()
-    .min(8, 'Password is Too Short!')
-    .max(50, 'Password is Too Long!')
-    .required('Password is required'),
+    .min(8, "Password is Too Short!")
+    .max(50, "Password is Too Long!")
+    .required("Password is required"),
 });
 
 //JSON.stringify(login) is used to convert the object into a string
@@ -39,8 +39,8 @@ const LoginValidationSchema = Yup.object().shape({
 // ); // {email: "", password: ""}
 
 function Login() {
-  const [Error, setError] = useState('');
-  const [Success, setSuccess] = useState('');
+  const [Error, setError] = useState("");
+  const [Success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,10 +57,10 @@ function Login() {
       );
       setLoading(false);
       setSuccess(data.message);
-      Cookies.set('user', data.token);
-      dispatch({ type: 'LOGIN', payload: data.user });
+      Cookies.set("user", data.token);
+      dispatch({ type: "LOGIN", payload: data.user });
       setTimeout(() => {
-        navigate('/home');
+        navigate("/home");
       }, 2000);
     } catch (error) {
       setError(error.response.data.error);
@@ -103,18 +103,18 @@ function Login() {
             {(formik) => (
               <Form>
                 <LoginInput
-                  name='email'
-                  placeholder='Email'
-                  type='email'
+                  name="email"
+                  placeholder="Email"
+                  type="email"
                   onChange={handleLoginChange}
                 />
                 <LoginInput
-                  type='password'
-                  name='password'
-                  placeholder='Password'
+                  type="password"
+                  name="password"
+                  placeholder="Password"
                   onChange={handleLoginChange}
                 />
-                <button type='submit' onSubmit={formik.handleSubmit}>
+                <button type="submit" onSubmit={formik.handleSubmit}>
                   Login
                 </button>
                 {loading && <Loading />}
@@ -123,12 +123,12 @@ function Login() {
               </Form>
             )}
           </Formik>
-          <Link to='/forgot' className='forgot'>
+          <Link to="/forgot" className="forgot">
             Forgotten Password ?
           </Link>
-          <div className='sign_splitter'></div>
-          <Link to='/signup'>
-            <button className='signup'>Sign Up</button>
+          <div className="sign_splitter"></div>
+          <Link to="/signup">
+            <button className="signup">Sign Up</button>
           </Link>
         </LoginForm>
       </LoginContainer>
