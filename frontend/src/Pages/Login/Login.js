@@ -82,11 +82,11 @@ function Login() {
     if (!isPasswordVisible) {
       setIspasswordVisible(true);
       passwordInput.setAttribute("type", "text");
-      setToggleEye(<AiOutlineEyeInvisible />);
+      setToggleEye(<AiOutlineEye />);
     } else {
       setIspasswordVisible(false); 
       passwordInput.setAttribute("type", "password");
-      setToggleEye(<AiOutlineEye />);
+      setToggleEye(<AiOutlineEyeInvisible />);
     }
   };
 
