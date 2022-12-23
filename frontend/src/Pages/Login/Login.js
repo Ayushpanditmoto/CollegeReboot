@@ -72,7 +72,7 @@ function Login() {
 
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
-  const [toggleEye, setToggleEye] = useState(<AiOutlineEye />);
+  const [toggleEye, setToggleEye] = useState(<AiOutlineEyeInvisible />);
   const [isPasswordVisible, setIspasswordVisible] = useState(false);
   const inputRef = useRef(null);
 
@@ -81,12 +81,12 @@ function Login() {
 
     if (!isPasswordVisible) {
       setIspasswordVisible(true);
-      passwordInput.setAttribute("type", "password");
-      setToggleEye(<AiOutlineEyeInvisible />);
-    } else {
-      setIspasswordVisible(false);
       passwordInput.setAttribute("type", "text");
       setToggleEye(<AiOutlineEye />);
+    } else {
+      setIspasswordVisible(false); 
+      passwordInput.setAttribute("type", "password");
+      setToggleEye(<AiOutlineEyeInvisible />);
     }
   };
 

@@ -33,7 +33,6 @@ function ResetPassword() {
   const clearInput = () => {
     setPassword("");
     setConfirmPassword("");
-
   };
 
   const handleSubmit = async (e) => {
@@ -47,7 +46,6 @@ function ResetPassword() {
       body: JSON.stringify({
         password: password,
         Authorization: "TestReturnedToken",
-
       }),
     });
 
@@ -81,7 +79,6 @@ function ResetPassword() {
                 name="password"
                 placeholder="New Password"
                 type="password"
-
                 onChange={handlePasswordChange}
               />
 
@@ -89,7 +86,6 @@ function ResetPassword() {
                 name="confirmPassword"
                 placeholder="Confirm new Password"
                 type="password"
-
                 onChange={handleConfirmPasswordChange}
               />
 
@@ -98,7 +94,6 @@ function ResetPassword() {
                   Cancel
                 </button>
                 <button type="submit">Continue</button>
-
               </ButtonWrapper>
             </Form>
           </Formik>
@@ -149,7 +144,6 @@ const ResetForm = styled.div`
   width: 550px;
   border-radius: 10px;
   display: flex;
-  margin: 0 1rem;
   box-shadow: 0 1px 2px var(--shadow-1);
   padding: 1rem;
   flex-direction: column;
@@ -202,11 +196,10 @@ const ResetForm = styled.div`
   }
 
   @media screen and (max-width: 300px) {
-    width: 92%;
+    width: 100%;
   }
 
   @media screen and (max-width: 768px) {
-    width: 92%;
-
+    width: 100%;
   }
 `;
