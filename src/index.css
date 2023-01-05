@@ -6,6 +6,8 @@
 body{
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
+  scrollbar-width: thin;
+  scrollbar-color: var(--blue-color) transparent;
 }
 html{
   scroll-behavior: smooth;
@@ -40,6 +42,8 @@ button{
   --dark-color-primary: #242526;
   --dark-color-secondary: #b0b3b8;
   --blue-color: #1876f2;
+  --red-color: #f44336;
+  --white-color: #fff;
   --green-color: #00d1b9;
   --light-blue-color: #e7f3ff;
   --border-color: #ccced2;
@@ -60,3 +64,26 @@ button{
   z-index: 99;
 }
 
+/* utiltiy classes */
+.centerrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.centercol {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hover1:hover {
+  background-color: var(--bg-third);
+}
+.hover2:hover {
+  background-color: var(--bg-secondary);
+  /* transition: all 0.3s ease-in-out; */
+}
+.active{
+  border-bottom: 3px solid var(--blue-color);
+}
