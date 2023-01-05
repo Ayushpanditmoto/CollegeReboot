@@ -1,7 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FaSearch, FaHome } from "react-icons/fa";
+import {
+  FaSearch,
+  FaHome,
+  FaMagic,
+  FaFacebookMessenger,
+  FaArrowCircleDown,
+  FaFonticonsFi,
+} from "react-icons/fa";
 
 function Headers() {
   return (
@@ -46,8 +53,34 @@ function Headers() {
             </Link>
           </div>
         </HeaderCenter>
-        <HeaderRight>
-          <Link to="/">Home</Link>
+        <HeaderRight className="centerrow">
+          <Link to="/profile" className="profile_link hover1">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+              alt=""
+            />
+            <span>Ayush</span>
+          </Link>
+          <div className="circle_icon hover1">
+            <Link to="/">
+              <FaMagic />
+            </Link>
+          </div>
+          <div className="circle_icon hover1">
+            <Link to="/">
+              <FaFacebookMessenger />
+            </Link>
+          </div>
+          <div className="circle_icon hover1">
+            <Link to="/">
+              <FaFonticonsFi />
+            </Link>
+          </div>
+          <div className="circle_icon hover1">
+            <Link to="/">
+              <FaArrowCircleDown />
+            </Link>
+          </div>
         </HeaderRight>
       </HeaderContainer>
     </>
@@ -132,4 +165,40 @@ const HeaderCenter = styled.div`
   }
 `;
 
-const HeaderRight = styled.div``;
+const HeaderRight = styled.div`
+  position: absolute;
+  right: 0;
+  transform: translateY(4px);
+  .profile_link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 3px 10px 3px 5px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+    margin-right: 10px;
+    img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+  }
+  .circle_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: var(--bg-forth);
+    padding: 0.5rem 0.5rem;
+    margin: 0.2rem 0.3rem;
+    a {
+      color: var(--dark-gray-color);
+      font-size: 1.5rem;
+    }
+  }
+`;
