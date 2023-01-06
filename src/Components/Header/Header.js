@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
@@ -13,7 +13,9 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { AiFillVideoCamera, AiFillGithub } from "react-icons/ai";
 import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
 
+import SearchMenu from "./SearchMenu";
 function Headers() {
+  const [show, setShow] = useState(false);
   return (
     <>
       <HeaderContainer>
@@ -23,11 +25,17 @@ function Headers() {
               <div className="title">LOGO</div>
             </div>
           </Link>
-          <div className="header_search">
+          <div
+            className="header_search"
+            onClick={() => {
+              setShow(!show);
+            }}
+          >
             <FaSearch color="blue" />
             <input type="text" placeholder="Search" />
           </div>
         </HeaderLeft>
+        {show && <SearchMenu setShow={setShow} />}
         <HeaderCenter className="centerrow">
           <div className="middle_icon active hover1">
             <Link to="/">
