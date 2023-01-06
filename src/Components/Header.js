@@ -1,10 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FaSearch, FaHome, FaFacebookMessenger } from "react-icons/fa";
+import {
+  FaSearch,
+  FaUserFriends,
+  FaHome,
+  FaFacebookMessenger,
+} from "react-icons/fa";
 import { CgMenuGridO } from "react-icons/cg";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { AiFillVideoCamera, AiFillGithub } from "react-icons/ai";
+import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
 
 function Headers() {
   return (
@@ -29,23 +36,23 @@ function Headers() {
           </div>
           <div className="middle_icon">
             <Link to="/">
-              <FaHome />
+              <FaUserFriends />
             </Link>
           </div>
           <div className="middle_icon">
             <Link to="/">
-              <FaHome />
+              <AiFillVideoCamera />
               <div className="middle_notification">9+</div>
             </Link>
           </div>
           <div className="middle_icon">
             <Link to="/">
-              <FaHome />
+              <BsFillFileEarmarkSpreadsheetFill />
             </Link>
           </div>
           <div className="middle_icon">
             <Link to="/">
-              <FaHome />
+              <AiFillGithub />
             </Link>
           </div>
         </HeaderCenter>
@@ -71,6 +78,9 @@ function Headers() {
             <Link to="/">
               <IoNotificationsSharp />
             </Link>
+            <div className="right_notification">
+              <span>9+</span>
+            </div>
           </div>
           <div className="circle_icon hover1">
             <Link to="/">
@@ -183,6 +193,7 @@ const HeaderRight = styled.div`
     }
   }
   .circle_icon {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,5 +208,19 @@ const HeaderRight = styled.div`
       color: var(--dark-gray-color);
       font-size: 1.7rem;
     }
+    :hover {
+      background-color: var(--bg-third);
+    }
+  }
+  .right_notification {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    background-color: var(--red-color);
+    color: var(--white-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 0.5rem;
   }
 `;
