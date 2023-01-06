@@ -1,14 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import {
-  FaSearch,
-  FaHome,
-  FaMagic,
-  FaFacebookMessenger,
-  FaArrowCircleDown,
-  FaFonticonsFi,
-} from "react-icons/fa";
+import { FaSearch, FaHome, FaFacebookMessenger } from "react-icons/fa";
+import { CgMenuGridO } from "react-icons/cg";
+import { IoNotificationsSharp } from "react-icons/io5";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 function Headers() {
   return (
@@ -63,7 +59,7 @@ function Headers() {
           </Link>
           <div className="circle_icon hover1">
             <Link to="/">
-              <FaMagic />
+              <CgMenuGridO />
             </Link>
           </div>
           <div className="circle_icon hover1">
@@ -73,12 +69,12 @@ function Headers() {
           </div>
           <div className="circle_icon hover1">
             <Link to="/">
-              <FaFonticonsFi />
+              <IoNotificationsSharp />
             </Link>
           </div>
           <div className="circle_icon hover1">
             <Link to="/">
-              <FaArrowCircleDown />
+              <IoMdArrowDropdown />
             </Link>
           </div>
         </HeaderRight>
@@ -197,8 +193,9 @@ const HeaderRight = styled.div`
     padding: 0.5rem 0.5rem;
     margin: 0.2rem 0.3rem;
     a {
+      transform: translateY(2px);
       color: var(--dark-gray-color);
-      font-size: 1.5rem;
+      font-size: 1.7rem;
     }
   }
 `;
