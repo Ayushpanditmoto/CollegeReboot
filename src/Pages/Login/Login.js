@@ -72,22 +72,12 @@ function Login() {
 
   const [login, setLogin] = useState(loginInfos);
   const { email, password } = login;
-  const [toggleEye, setToggleEye] = useState(<AiOutlineEye />);
   const [isPasswordVisible, setIspasswordVisible] = useState(false);
-  const inputRef = useRef(null);
 
   const showPassword = () => {
-    const passwordInput = inputRef.current.firstElementChild.firstElementChild;
-
-    if (!isPasswordVisible) {
-      setIspasswordVisible(true);
-      passwordInput.setAttribute("type", "password");
-      setToggleEye(<AiOutlineEyeInvisible />);
-    } else {
-      setIspasswordVisible(false);
-      passwordInput.setAttribute("type", "text");
-      setToggleEye(<AiOutlineEye />);
-    }
+    isPasswordVisible
+      ? setIspasswordVisible(false)
+      : setIspasswordVisible(true);
   };
 
   const handleLoginChange = (e) => {
@@ -128,16 +118,20 @@ function Login() {
                   type="email"
                   onChange={handleLoginChange}
                 />
-                <div className="password-wrapper" ref={inputRef}>
+                <div className="password-wrapper">
                   <LoginInput
-                    type="password"
+                    type={isPasswordVisible ? "text" : "password"}
                     name="password"
                     placeholder="Password"
                     onChange={handleLoginChange}
                   />
                 </div>
                 <span className="eyeslash-icon" onClick={showPassword}>
-                  {toggleEye}
+                  {isPasswordVisible ? (
+                    <AiOutlineEye />
+                  ) : (
+                    <AiOutlineEyeInvisible />
+                  )}
                 </span>
 
                 <button type="submit" onSubmit={formik.handleSubmit}>
