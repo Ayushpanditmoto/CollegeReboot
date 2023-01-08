@@ -7,6 +7,7 @@ import Forgot from './Pages/ForgotPassword/ForgotPassword';
 import NotFound from './Pages/NotFound/NotFound';
 import Home from './Pages/Home/Home';
 import Reset from './Pages/ResetPassword/ResetPassword';
+import ResetLink from './Pages/ResetPassword/ResetLink';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/forgot' element={<Forgot />} />
         <Route path='/reset' element={<Reset />} />
+        <Route path='/reset-link' element={<ResetLink />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/:path' element={<NotFound />} />
       </Routes>
