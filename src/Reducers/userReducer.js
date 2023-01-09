@@ -1,4 +1,8 @@
+import { createSlice } from '@reduxjs/toolkit';
 import Cookie from 'js-cookie';
+
+// state = Cookie.get('user') ? JSON.parse(Cookie.get('user')) : initialState,
+// TODO:: insted of setting cookie directly in reducer we can disptach in the component level
 const initialState = {
   user: null,
   token: null,
@@ -7,24 +11,21 @@ const initialState = {
   error: null,
 };
 
-const userReducer = (
-  state = Cookie.get('user') ? JSON.parse(Cookie.get('user')) : initialState,
-  action
-) => {
-  switch (action.type) {
-    case 'LOGIN':
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case 'USER_LOGOUT':
-      return {
-        ...state,
-        user: null,
-      };
-    default:
-      return state;
-  }
-};
+export const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    login: (state, action) => {
+      state.user = action.payload;
+    },
+    logout: (state) => {
+      state.user = null;
+    },
+  },
+});
 
-export default userReducer;
+export const { login, logout } = userSlice.actions;
+
+export const getUserInfo = (state) => state.user.user;
+
+export default userSlice.reducer;

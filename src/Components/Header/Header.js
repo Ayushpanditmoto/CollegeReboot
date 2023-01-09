@@ -1,21 +1,25 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import {
   FaSearch,
   FaUserFriends,
   FaHome,
   FaFacebookMessenger,
-} from "react-icons/fa";
-import { CgMenuGridO } from "react-icons/cg";
-import { IoNotificationsSharp } from "react-icons/io5";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { AiFillVideoCamera, AiFillGithub } from "react-icons/ai";
-import { BsFillFileEarmarkSpreadsheetFill } from "react-icons/bs";
+} from 'react-icons/fa';
+import { CgMenuGridO } from 'react-icons/cg';
+import { IoNotificationsSharp } from 'react-icons/io5';
+import { IoMdArrowDropdown } from 'react-icons/io';
+import { AiFillVideoCamera, AiFillGithub } from 'react-icons/ai';
+import { BsFillFileEarmarkSpreadsheetFill } from 'react-icons/bs';
+import { getUserInfo } from '../../Reducers/userReducer';
 
-import SearchMenu from "./SearchMenu";
+import SearchMenu from './SearchMenu';
 function Headers() {
   const [show, setShow] = useState(false);
+  const userInfo = useSelector(getUserInfo);
+
   return (
     <>
       <HeaderContainer>
@@ -70,7 +74,7 @@ function Headers() {
               src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
               alt=""
             />
-            <span>Ayush</span>
+            <span>{userInfo?.firstName || 'No User'}</span>
           </Link>
           <div className="circle_icon hover1">
             <Link to="/">
