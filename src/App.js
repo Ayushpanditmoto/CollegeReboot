@@ -7,6 +7,7 @@ import Forgot from './Pages/ForgotPassword/ForgotPassword';
 import NotFound from './Pages/NotFound/NotFound';
 import Home from './Pages/Home/Home';
 import Reset from './Pages/ResetPassword/ResetPassword';
+import EmailReset from './Pages/EmailReset/EmailReset';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/reset' element={<Reset />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/:path' element={<NotFound />} />
+        <Route path='/emailreset' element={<EmailReset />}/>
       </Routes>
     </>
   );
