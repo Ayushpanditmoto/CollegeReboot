@@ -88,7 +88,7 @@ function ResetPassword() {
                 type="password"
                 onChange={handleConfirmPasswordChange}
               />
-
+              
               <ButtonWrapper>
                 <button type="reset" onClick={clearInput}>
                   Cancel
