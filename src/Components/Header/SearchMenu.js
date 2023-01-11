@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaBackspace } from "react-icons/fa";
 import useClickOutside from "../../helpers/clickOutside";
 
 function SearchMenu({ setShow }) {
@@ -13,6 +13,9 @@ function SearchMenu({ setShow }) {
   return (
     <SearchContain ref={el}>
       <div className="search_wrap">
+        <div className="back_button">
+          <FaBackspace color="blue" />
+        </div>
         <div className="header_logo">
           <div className="circle hover1">
             <FaSearch color="blue" />

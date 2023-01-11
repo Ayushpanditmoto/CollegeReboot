@@ -1,22 +1,29 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useField, ErrorMessage } from 'formik';
-function LoginInput({ placeholder, ...props }) {
+import React from "react";
+import styled from "styled-components";
+import { useField, ErrorMessage } from "formik";
+import { MdError } from "react-icons/md";
+function LoginInput({ placeholder, bottom, ...props }) {
   const [field, meta] = useField(props);
   return (
     <InputWrap>
-      {meta.touched && meta.error && (
+      {meta.touched && meta.error && !bottom && (
         <ErrorMessage component={InputError} name={field.name} />
       )}
 
       <input
-        className={meta.touched && meta.error && 'input_error_border'}
+        className={meta.touched && meta.error && "input_error_border"}
         type={field.type}
         name={field.name}
         placeholder={placeholder}
         {...field}
         {...props}
       />
+      {meta.touched && meta.error && bottom && (
+        <ErrorMessage component={InputError} name={field.name} />
+      )}
+      {meta.touched && meta.error && (
+        <MdError color="#e20000" className="error_icon" />
+      )}
     </InputWrap>
   );
 }
@@ -50,21 +57,28 @@ const InputWrap = styled.div`
     border: 1px solid red;
     border-color: red !important;
   }
+  .error_icon {
+    position: absolute;
+    top: 18px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const InputError = styled.div`
-  /* position: absolute;
-  background-color: red;
-  top: 0; */
-  background-color: #cd3c3c;
+  position: absolute;
+  top: -40px;
+  background-color: #e20000;
   width: 320px;
   margin: 0 auto;
   color: white;
   font-size: 1rem;
+  transition: all 0.7s ease-in-out;
+
   display: flex;
   padding: 10px 0;
-  border-radius: 5px;
-  box-shadow: var(--shadow-1);
+  border-radius: 2px;
   justify-content: center;
   align-items: center;
   font-weight: 700;

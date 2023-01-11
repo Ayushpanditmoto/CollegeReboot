@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { Formik, Form } from "formik";
@@ -124,6 +124,7 @@ function Login() {
                     name="password"
                     placeholder="Password"
                     onChange={handleLoginChange}
+                    bottom="true"
                   />
                 </div>
                 <span className="eyeslash-icon" onClick={showPassword}>
