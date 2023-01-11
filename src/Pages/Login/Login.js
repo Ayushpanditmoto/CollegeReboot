@@ -12,6 +12,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { login as userLogin } from "../../Reducers/userReducer";
 
 const loginInfos = {
   email: "",
@@ -60,12 +61,12 @@ function Login() {
       setLoading(false);
       setSuccess(data.message);
       Cookies.set("user", data.token);
-      dispatch({ type: "LOGIN", payload: data.user });
+      dispatch(userLogin(data));
       setTimeout(() => {
         navigate("/home");
       }, 2000);
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error?.response?.data?.error);
       setLoading(false);
     }
   };

@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../../Reducers/userReducer';
 
 const RegisterValidationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -71,7 +72,7 @@ function Signup() {
       setTimeout(() => {
         // setRegisterSuccess('');
         // setRegister(UserInfo);
-        dispatch({ type: 'LOGIN', payload: rest });
+        dispatch(login(rest));
         Cookies.set('user', JSON.stringify(rest));
         navigate('/');
       }, 2000);
@@ -201,9 +202,9 @@ function Signup() {
   console.log(register);
   return (
     <Registeration>
-      <div className='register'>
-        <div className='register_header'>
-          <Link to='/'>
+      <div className="register">
+        <div className="register_header">
+          <Link to="/">
             <AiOutlineClose />
           </Link>
           <span>Sign Up </span>
@@ -231,32 +232,32 @@ function Signup() {
           }}
         >
           {(formik) => (
-            <Form className='register_form' onSubmit={formik.handleSubmit}>
-              <div className='reg_line'>
+            <Form className="register_form" onSubmit={formik.handleSubmit}>
+              <div className="reg_line">
                 <RegisterInput
-                  name='firstName'
-                  placeholder='First Name'
+                  name="firstName"
+                  placeholder="First Name"
                   onChange={handleRegisterChange}
                 />
               </div>
-              <div className='reg_line'>
+              <div className="reg_line">
                 <RegisterInput
-                  name='lastName'
-                  placeholder='Surname Name'
+                  name="lastName"
+                  placeholder="Surname Name"
                   onChange={handleRegisterChange}
                 />
               </div>
-              <div className='reg_line'>
+              <div className="reg_line">
                 <RegisterInput
-                  name='email'
-                  placeholder='Email'
+                  name="email"
+                  placeholder="Email"
                   onChange={handleRegisterChange}
                 />
               </div>
-              <div className='reg_line'>
+              <div className="reg_line">
                 <RegisterInput
-                  name='password'
-                  placeholder='Enter New Password'
+                  name="password"
+                  placeholder="Enter New Password"
                   onChange={handleRegisterChange}
                 />
               </div>
@@ -267,39 +268,39 @@ function Signup() {
                     onChange={handleRegisterChange}
                   />
                 </div> */}
-              <div className='reg_line'>
-                <div className='reg_line_header'>Branch</div>
+              <div className="reg_line">
+                <div className="reg_line_header">Branch</div>
                 <Field
-                  as='select'
-                  name='branch'
-                  id='branch'
+                  as="select"
+                  name="branch"
+                  id="branch"
                   value={branch}
                   onChange={handleRegisterChange}
                 >
-                  <option value='' disabled defaultValue>
+                  <option value="" disabled defaultValue>
                     Select branch
                   </option>
-                  <option value='CSE'>CSE</option>
-                  <option value='IT'>IT</option>
-                  <option value='MECH'>MECH</option>
-                  <option value='CIVIL'>CIVIL</option>
-                  <option value='ECE'>ECE</option>
+                  <option value="CSE">CSE</option>
+                  <option value="IT">IT</option>
+                  <option value="MECH">MECH</option>
+                  <option value="CIVIL">CIVIL</option>
+                  <option value="ECE">ECE</option>
                 </Field>
               </div>
               {branchError && <MessageError>{branchError}</MessageError>}
-              <div className='reg_col'>
-                <div className='reg_line_header'>
+              <div className="reg_col">
+                <div className="reg_line_header">
                   Date of Birth <AiOutlineInfoCircle />
                 </div>
-                <div className='reg_grid'>
+                <div className="reg_grid">
                   <Field
-                    as='select'
-                    name='bDay'
-                    id='bDay'
+                    as="select"
+                    name="bDay"
+                    id="bDay"
                     value={bDay}
                     onChange={handleRegisterChange}
                   >
-                    <option value='' disabled defaultValue>
+                    <option value="" disabled defaultValue>
                       date
                     </option>
                     {Day.map((day, i) => (
@@ -309,13 +310,13 @@ function Signup() {
                     ))}
                   </Field>
                   <Field
-                    as='select'
-                    name='bMonth'
-                    id='bMonth'
+                    as="select"
+                    name="bMonth"
+                    id="bMonth"
                     value={bMonth}
                     onChange={handleRegisterChange}
                   >
-                    <option value='' disabled defaultValue>
+                    <option value="" disabled defaultValue>
                       month
                     </option>
                     {Month.map((month, i) => (
@@ -325,13 +326,13 @@ function Signup() {
                     ))}
                   </Field>
                   <Field
-                    as='select'
-                    name='bYear'
-                    id='bYear'
+                    as="select"
+                    name="bYear"
+                    id="bYear"
                     value={bYear}
                     onChange={handleRegisterChange}
                   >
-                    <option value='' disabled defaultValue>
+                    <option value="" disabled defaultValue>
                       year
                     </option>
                     {Year.map((year, i) => (
@@ -343,52 +344,52 @@ function Signup() {
                 </div>
               </div>
               {dateError && <MessageError>{dateError}</MessageError>}
-              <div className='reg_col'>
-                <div className='reg_line_header'>
+              <div className="reg_col">
+                <div className="reg_line_header">
                   Gender <AiOutlineInfoCircle />
                 </div>
-                <div className='reg_grid' role='group'>
-                  <label htmlFor='male'>
+                <div className="reg_grid" role="group">
+                  <label htmlFor="male">
                     Male
                     <Field
-                      type='radio'
-                      name='gender'
-                      id='male'
-                      value='male'
+                      type="radio"
+                      name="gender"
+                      id="male"
+                      value="male"
                       onChange={handleRegisterChange}
                     />
                   </label>
-                  <label htmlFor='female'>
+                  <label htmlFor="female">
                     Female
                     <Field
-                      type='radio'
-                      name='gender'
-                      id='female'
-                      value='female'
+                      type="radio"
+                      name="gender"
+                      id="female"
+                      value="female"
                       onChange={handleRegisterChange}
                     />
                   </label>
-                  <label htmlFor='other'>
+                  <label htmlFor="other">
                     Other
                     <Field
-                      type='radio'
-                      name='gender'
-                      id='other'
-                      value='other'
+                      type="radio"
+                      name="gender"
+                      id="other"
+                      value="other"
                       onChange={handleRegisterChange}
                     />
                   </label>
                 </div>
               </div>
               {genderError && <MessageError>{genderError}</MessageError>}
-              <div className='reg_info'>
+              <div className="reg_info">
                 By clicking Sign Up, you agree to our{' '}
                 <span>Terms, Data Policy &nbsp;</span> and
                 <span> Cookie Policy.</span> You may receive SMS Notifications
                 from us and can opt out any time.
               </div>
               <button
-                type='submit'
+                type="submit"
                 onClick={() => {
                   validateBranch(register.branch);
                   validateGender(register.gender);
