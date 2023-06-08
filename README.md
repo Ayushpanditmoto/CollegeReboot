@@ -1,15 +1,26 @@
-
 # 🎓CollegeReboot🎓
 
 ## 💥About💥
-*CollegeReboot is a Social Media Platform where user can Communicate each other , Also going to implement random video chat from strangers where user can video chat.*
 
+_CollegeReboot is a Social Media Platform where user can Communicate each other , Also going to implement random video chat from strangers where user can video chat._
 
+## Run with Docker
+
+Build image on local machine
+
+```
+docker build -t collegereboot:tag .
+```
+
+Run locally
+
+```
+docker run -p 8000:8000 collegereboot:tag
+```
 
 ## 📷Screenshots📷
 
 ![App Screenshot](./src/CollegeReboot.png)
-
 
 # ⚡Getting Started with Create React App⚡
 
@@ -89,6 +100,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ```bash
 npm run build
 fails to minify
-``` 
+```
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
